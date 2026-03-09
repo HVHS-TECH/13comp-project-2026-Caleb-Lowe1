@@ -80,15 +80,14 @@ function fb_initialise() {
   console.log('%c fb_initialise(): ',
     'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const firebaseConfig = {
-    apiKey: "AIzaSyCwPibZHntricqhOchcdlX3H7ve_CFQhR0",
-    authDomain: "comp-2025-caleb-lowe-31f01.firebaseapp.com",
-    databaseURL: "https://comp-2025-caleb-lowe-31f01-default-rtdb.firebaseio.com",
-    projectId: "comp-2025-caleb-lowe-31f01",
-    storageBucket: "comp-2025-caleb-lowe-31f01.firebasestorage.app",
-    messagingSenderId: "440676386005",
-    appId: "1:440676386005:web:05b4cb8a914c0ceb0ace5c",
-    measurementId: "G-WGYBNEYVY3"
-  };
+  apiKey: "AIzaSyA3npLrDl0XMDq66G7K1iyNLXhervsK0DU",
+  authDomain: "caleb-lowe-13comp.firebaseapp.com",
+  databaseURL: "https://caleb-lowe-13comp-default-rtdb.firebaseio.com",
+  projectId: "caleb-lowe-13comp",
+  storageBucket: "caleb-lowe-13comp.firebasestorage.app",
+  messagingSenderId: "486660971961",
+  appId: "1:486660971961:web:c6f46cda55d839d9612a68"
+};
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const firebaseGameDB = getDatabase(app);
