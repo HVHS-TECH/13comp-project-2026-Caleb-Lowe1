@@ -59,7 +59,7 @@ export {
   fb_initialise,
   fb_authenticate,
   fb_detectloginchange,
-
+  fb_DeleteRec,
   fb_WriteRec,
   
  
@@ -339,6 +339,26 @@ function fb_sortedreadcoin() {
   }).catch((error) => {
     console.log("Sorting failed", error);
   });
+}
+
+function fb_DeleteRec() {
+    console.log('%c fb_DeleteRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const DB = getDatabase()
+
+    const dbReference = ref(DB, "Private/" + userId);
+
+    remove(dbReference).then(() => {
+
+        //✅ Code for a successful delete goes here
+        console.log("Record Deleted");
+
+    }).catch((error) => {
+
+        //❌ Code for a delete error goes here
+        console.log("ERROR: DeleteRec")
+
+    });
+
 }
 /**************************************************************/
 // END OF CODE

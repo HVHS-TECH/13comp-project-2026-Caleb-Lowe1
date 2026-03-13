@@ -37,6 +37,10 @@ import { fb_WriteScore }
     from './fb_io.mjs';
 window.fb_WriteScore = fb_WriteScore;
 
+import { fb_DeleteRec }
+    from './fb_io.mjs';
+window.fb_DeleteRec = fb_DeleteRec;
+
 
 
 import { fb_sortedread }
