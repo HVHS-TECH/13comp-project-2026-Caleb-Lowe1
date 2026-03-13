@@ -152,7 +152,7 @@ function fb_detectloginchange() {
         console.error("❌ Auth detection error:", error);
     });
 };
-
+ 
 
 
 function fb_WriteScore1(userScoregamethatworks) {
