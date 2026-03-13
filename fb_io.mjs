@@ -1,8 +1,8 @@
+//Almost all code here taken straight from year 12 assesment
+
 //**************************************************************/
 // fb_io.mjs
 // Generalised firebase routines
-//Code here taken from my year 12 assesment
-//
 // All variables & function begin with fb_  all const with FB_
 // Diagnostic code lines have a comment appended to them //DIAG
 /**************************************************************/
@@ -146,7 +146,7 @@ function fb_detectloginchange() {
             console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
         } else {
             console.log("⚠️ Not logged in — redirecting to index.html");
-            location.href = "index.html"; 
+            location.href = "registration.html"; 
         }
     }, (error) => {
         console.error("❌ Auth detection error:", error);
