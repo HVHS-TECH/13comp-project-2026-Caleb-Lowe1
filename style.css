@@ -4,3 +4,23 @@ h1 {max-width: 400px;
     h2 {max-width: 200px;
   margin: auto;
     font-size: 2rem;}
+
+.grid-container {
+display: grid;
+grid-template-areas:
+    'links header header header header header'
+}
+
+.grid-1 {
+  border-style:groove;
+  grid-area: links ;
+  background-color:#16697A; 
+  color:#ffffff;   
+}
+
+.grid-2 {
+border-style:groove;  
+grid-area: header ;
+background-color:#70c8da;
+text-align:center;
+}
