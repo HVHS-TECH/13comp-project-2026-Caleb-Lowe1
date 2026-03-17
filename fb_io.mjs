@@ -252,9 +252,9 @@ function fb_WriteRecPrivate() {
   var name = document.getElementById("name").value;
     var age = document.getElementById("age").value;
    var gender = document.getElementById("gender").value; 
- if (!currentUser || isNaN(age) || age == "" ||gender == "" || !isNaN(gender)) {
- alert ("You must be logged in with a valid age, name and a valid gender") 
- }
+ //if (!currentUser || isNaN(age) || age == "" ||gender == "" || !isNaN(gender)) {
+ //alert ("You must be logged in with a valid age, name and a valid gender") 
+ //}
 
   const DB = getDatabase();
    const dbReference = ref(DB, "Private/" + userId);
