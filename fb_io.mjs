@@ -195,8 +195,8 @@ function fb_WriteRec() {
   const AUTH = getAuth();
    var name = document.getElementById("name").value;
     var age = document.getElementById("age").value;
-    var colour = document.getElementById("colour").value;
-  if (!currentUser || name == "" || name == null || !isNaN(name) || age == null || age == "" || isNaN(age) || colour == "" || colour == null || !isNaN(colour)) {alert("You must be logged in and enter a valid name and age.")
+    var gender = document.getElementById("gender").value;
+  if (!currentUser || name == "" || name == null || !isNaN(name) || age == null || age == "" || isNaN(age) || gender == "" || gender == null || !isNaN(gender)) {alert("You must be logged in and enter a valid name and age.")
 location.href = "index.html";
   }
   
@@ -251,10 +251,10 @@ function fb_WriteRecPrivate() {
   const AUTH = getAuth();
   var name = document.getElementById("name").value;
     var age = document.getElementById("age").value;
-   var colour = document.getElementById("colour").value; 
-  if (!currentUser || name == "" || name == null || !isNaN(name) || age == null || age == "" || isNaN(age) || colour == "" || colour == null || !isNaN(colour)) {alert("You must be logged in and enter a valid name and age.")
-location.href = "index.html";
-  }
+   var gender = document.getElementById("gender").value; 
+ if (!currentUser || isNaN(age) || age == "" ||gender == "" || !isNaN(gender)) {
+ alert ("You must be logged in with a valid age, name and a valid gender") 
+ }
 
   const DB = getDatabase();
    const dbReference = ref(DB, "Private/" + userId);
@@ -263,8 +263,8 @@ location.href = "index.html";
         if (user) {
             currentUser = user;
             userId = user.uid;
-            console.log("✅ Logged in as:", user.email, "Name:", user.displayName, colour);
-            update(dbReference, { Email: user.email, Emaildisplayname: user.displayName, Age: age, Favouritecolour: colour}).then(() => {
+            console.log("✅ Logged in as:", user.email, "Name:", user.displayName, gender);
+            update(dbReference, { Email: user.email, Emaildisplayname: user.displayName, Age: age, gender: gender}).then(() => {
               location.href='gameMenu.html'
     //✅ Code for a successful write goes here
     console.log("successful write")

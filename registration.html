@@ -4,5 +4,34 @@
 <script type="module" src="./main.mjs"></script>
 <link rel="stylesheet" type="text/css" href="./style.css">
 <body onload="fb_initialise(); fb_authenticate()">
-<button onclick="location.href='index.html'">Home</button>    
+<div class="grid-container">
+<div class="grid-1">
+    <button onclick="location.href='index.html'">Home</button>
+    <br>
+    <br>
+    <button onclick="fb_DeleteRec()">Delete data</button>
+    <br>
+    <br>
+    <button onclick="location.href='admin.html'">Admin</button>
+    <br>
+    <br>
+    <button onclick="fb_">log out</button>
+    </div>
+    <div class="grid-2">
+<h1>Caleb's games</h1>
+ <form id="username">
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" required />
+      </form>
+      <form id="userage">
+      <label for="age">Your Age:</label>
+      <input type="text" id="age" age="age" required />
+      </form>
+     <form id="usergender">
+      <label for="gender">Your gender:</label>
+      <input type="text" id="gender" colour="gender" required />
+      </form>
+      <button onclick="fb_WriteRec(); fb_WriteRecPrivate();">Submit</button>
+</div>
+    </div>    
 </html>
