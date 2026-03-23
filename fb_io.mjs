@@ -196,8 +196,9 @@ function fb_WriteRec() {
    var name = document.getElementById("name").value;
     var age = document.getElementById("age").value;
     var gender = document.getElementById("gender").value;
+    //if the users name is invalid, age is invalid or gender is invalid they are given an alert and can not continue to the next page
   if (!currentUser || name == "" || name == null || !isNaN(name) || age == null || age == "" || isNaN(age) || gender == "" || gender == null || !isNaN(gender)) {alert("You must be logged in and enter a valid name and age.")
-location.href = "index.html";
+return;
   }
   
  
@@ -252,9 +253,7 @@ function fb_WriteRecPrivate() {
   var name = document.getElementById("name").value;
     var age = document.getElementById("age").value;
    var gender = document.getElementById("gender").value; 
- //if (!currentUser || isNaN(age) || age == "" ||gender == "" || !isNaN(gender)) {
- //alert ("You must be logged in with a valid age, name and a valid gender") 
- //}
+
 
   const DB = getDatabase();
    const dbReference = ref(DB, "Private/" + userId);
