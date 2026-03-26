@@ -145,7 +145,7 @@ function fb_detectloginchange() {
             userId = user.uid;
             console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
         } else {
-            console.log("⚠️ Not logged in — redirecting to index.html");
+            console.log("⚠️ Not logged in — redirecting to registration.html");
             location.href = "registration.html"; 
         }
     }, (error) => {
