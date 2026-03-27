@@ -238,7 +238,7 @@ return;
   });
         } else {
             console.log("⚠️ Not logged in — redirecting to index.html");
-            location.href = "index.html"; 
+            location.href = "registration.html"; 
         }
     },
     (error) => {
