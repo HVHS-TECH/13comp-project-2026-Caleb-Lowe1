@@ -28,6 +28,9 @@ import { fb_detectloginchange }
     from './fb_io.mjs';
 window.fb_detectloginchange = fb_detectloginchange;
 
+import { fb_detectloginchangeregister }
+    from './fb_io.mjs';
+window.fb_detectloginchangeregister = fb_detectloginchangeregister;
 
 import { fb_WriteRec }
     from './fb_io.mjs';
