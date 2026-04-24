@@ -166,7 +166,7 @@ function fb_detectloginchangeregister() {
             location.href = "gameMenu.html"; 
         } else {
             console.log("⚠️ Not logged in — redirecting to registration.html");
-            fb_authenticate(); 
+            location.href = "registration.html"
         }
     }, (error) => {
         console.error("❌ Auth detection error:", error);
@@ -217,7 +217,7 @@ function fb_WriteRec() {
     var age = document.getElementById("age").value;
     var gender = document.getElementById("gender").value;
     //if the users name is invalid, age is invalid or gender is invalid they are given an alert and can not continue to the next page
-  if (!currentUser || name == "" || name == null || !isNaN(name) || age == null || age == "" || isNaN(age) || gender == "" || gender == null || !isNaN(gender)) {alert("You must be logged in and enter a valid name and age.")
+  if (!currentUser || name == "" || name == null || !isNaN(name) || age == null || age == "" || isNaN(age) || gender == "" || gender == null || !isNaN(gender)) {alert("You must be logged in and enter a valid name and gender (must have only letters) and a valid age (must have only numbers).")
 return;
   }
   
