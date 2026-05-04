@@ -163,6 +163,7 @@ function fb_detectloginchangeregister() {
             currentUser = user;
             userId = user.uid;
             console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
+            console.log("beep")
             location.href = "gameMenu.html"; 
         } else {
             console.log("⚠️ Not logged in — redirecting to registration.html");
