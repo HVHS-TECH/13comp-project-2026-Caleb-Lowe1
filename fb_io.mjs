@@ -272,8 +272,8 @@ function fb_WriteRecPrivate() {
   const AUTH = getAuth();
   var name = document.getElementById("name").value;
     var age = document.getElementById("age").value;
-   var gender = document.getElementById("gender").value; 
-   var birthday = document.getElementbyId("userbirthday").value;
+    var gender = document.getElementById("gender").value; 
+    var birthday = document.getElementbyId("birthday").value;
 
 
   const DB = getDatabase();
@@ -286,6 +286,7 @@ function fb_WriteRecPrivate() {
             console.log("✅ Logged in as:", user.email, "Name:", user.displayName, gender);
             update(dbReference, { Email: user.email, Emaildisplayname: user.displayName, Age: age, gender: gender}).then(() => {
               location.href='gameMenu.html'
+              console.log("hello")
     //✅ Code for a successful write goes here
     console.log("successful write")
     
