@@ -163,7 +163,6 @@ function fb_detectloginchangeregister() {
             currentUser = user;
             userId = user.uid;
             console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
-            console.log("beep")
             location.href = "gameMenu.html"; 
         } else {
             console.log("⚠️ Not logged in — redirecting to registration.html");
@@ -274,6 +273,7 @@ function fb_WriteRecPrivate() {
   var name = document.getElementById("name").value;
     var age = document.getElementById("age").value;
    var gender = document.getElementById("gender").value; 
+   var birthday = document.getElementbyId("userbirthday").value;
 
 
   const DB = getDatabase();
