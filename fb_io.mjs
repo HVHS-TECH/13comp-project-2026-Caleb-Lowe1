@@ -285,7 +285,7 @@ function fb_WriteRecPrivate() {
             currentUser = user;
             userId = user.uid;
             console.log("✅ Logged in as:", user.email, "Name:", user.displayName, gender);
-            update(dbReference, { Email: user.email, Emaildisplayname: user.displayName, Age: age, gender: Gender, Birthday: birthday}).then(() => {
+            update(dbReference, { Email: user.email, Emaildisplayname: user.displayName, Age: age, Gender: gender, Birthday: birthday}).then(() => {
               location.href='gameMenu.html'
               console.log("hello")
     //✅ Code for a successful write goes here
