@@ -43,13 +43,13 @@ function playerHitCoin(coin, Player) {
     coin.remove();
     score++;
 
-    
 
-    
-   
+
+
+
     Player.rotationSpeed = 0;
     Player.rotation = 0;
-    
+
 }
 
 function playerHitSpecialCoin(specialCoin, Player) {
@@ -74,12 +74,12 @@ function draw() {
 
 function runGame() {
     background('gray');
-    
+
     // Spawn new coins occasionally
     if (random(0, 500) < 4) {
         coinGroup.add(createCoin());
     }
-    
+
     movePlayer();
     coinGroup.collides(Player, playerHitCoin);
 
@@ -93,8 +93,8 @@ function runGame() {
             fb_WriteScore1(userScore1)
         }
     }
-    
-    
+
+
 
     // If there's a special coin, check collision and timing
     if (specialCoin) {
@@ -145,7 +145,7 @@ function displayScore() {
 }
 
 function checkCoinTime(_coin) {
-    
+
     // Check if the coin has been around too long
     if (_coin.spawntime + COIN_TIMEOUT < millis()) {
         _coin.remove();  // Remove the coin that has been around for too long
