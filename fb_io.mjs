@@ -144,6 +144,7 @@ function fb_detectloginchange() {
         if (user) {
             currentUser = user;
             userId = user.uid;
+                      fb_getUsername();
             console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
         } else {
             console.log("⚠️ Not logged in — redirecting to registration.html");
@@ -160,10 +161,12 @@ function fb_detectloginchangeregister() {
 
     onAuthStateChanged(AUTH, (user) => {
         if (user) {
-            currentUser = user;
+          fb_getUsername();  
+          currentUser = user;
             userId = user.uid;
             console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
             location.href = "gameMenu.html"; 
+            
         } else {
             console.log("⚠️ Not logged in — redirecting to registration.html");
             location.href = "registration.html"
@@ -173,6 +176,19 @@ function fb_detectloginchangeregister() {
     });
 };
  
+function fb_getUsername() {
+    const DB = getDatabase();
+    const dbReference = ref(DB, "Public/" + userId + "/Name");
+    get (dbReference).then((data) => {
+        var fb_data = data.val();
+        console.log(fb_data);
+        console.log("hello")
+        var name;
+        namedIndex.innerHTML = "Play my games " + fb_data;
+    });
+    
+    
+}
 
 
 function fb_WriteScore1(userScoregamethatworks) {
