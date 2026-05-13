@@ -28,6 +28,10 @@ import { fb_detectloginchange }
     from './fb_io.mjs';
 window.fb_detectloginchange = fb_detectloginchange;
 
+import { fb_detectloginchangeGameMenu }
+    from './fb_io.mjs';
+window.fb_detectloginchangeGameMenu = fb_detectloginchangeGameMenu;
+
 import { fb_detectloginchangeregister }
     from './fb_io.mjs';
 window.fb_detectloginchangeregister = fb_detectloginchangeregister;

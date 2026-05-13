@@ -60,6 +60,7 @@ export {
   fb_authenticate,
   fb_detectloginchange,
   fb_detectloginchangeregister,
+  fb_detectloginchangeGameMenu,
   fb_DeleteRec,
   fb_WriteRec,
 
@@ -135,7 +136,24 @@ function fb_authenticate() {
     });
 
 };
+function fb_detectloginchangeGameMenu() {
+  console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const AUTH = getAuth();
 
+  onAuthStateChanged(AUTH, (user) => {
+    if (user) {
+      currentUser = user;
+      userId = user.uid;
+      fb_getUsername();
+      console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
+    } else {
+      console.log("⚠️ Not logged in — redirecting to registration.html");
+      location.href = "registration.html";
+    }
+  }, (error) => {
+    console.error("❌ Auth detection error:", error);
+  });
+};
 function fb_detectloginchange() {
   console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const AUTH = getAuth();
@@ -155,13 +173,32 @@ function fb_detectloginchange() {
   });
 };
 
+
+
+function fb_detectloginchange() {
+  console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const AUTH = getAuth();
+
+  onAuthStateChanged(AUTH, (user) => {
+    if (user) {
+      currentUser = user;
+      userId = user.uid;
+      console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
+    } else {
+      console.log("⚠️ Not logged in — redirecting to registration.html");
+      location.href = "registration.html";
+    }
+  }, (error) => {
+    console.error("❌ Auth detection error:", error);
+  });
+};
+
 function fb_detectloginchangeregister() {
   console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const AUTH = getAuth();
 
   onAuthStateChanged(AUTH, (user) => {
     if (user) {
-      fb_getUsername();
       currentUser = user;
       userId = user.uid;
       console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
