@@ -162,7 +162,6 @@ function fb_detectloginchange() {
     if (user) {
       currentUser = user;
       userId = user.uid;
-      fb_getUsername();
       console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
     } else {
       console.log("⚠️ Not logged in — redirecting to registration.html");
