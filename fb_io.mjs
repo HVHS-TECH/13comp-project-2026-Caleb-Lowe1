@@ -196,33 +196,10 @@ function fb_detectloginchangeregister() {
   });
 };
 
-function fb_getUsername() {
-  const DB = getDatabase();
-  const dbReference = ref(DB, "Public/" + userId + "/Name");
-  get(dbReference).then((data) => {
-    var fb_data = data.val();
-    console.log(fb_data);
-    console.log("hello")
-    var name;
-    namedIndex.innerHTML = "Play my games " + fb_data;
-  });
 
 
-}
 
 
-function fb_createGame() {
-const DB = getDatabase();
-  const dbReference = ref(DB, "games/GTN/activegames/" + userId);
-  update(dbReference, {Full: false}).then(() => {
-
-  console.log("written")
-  }).catch((error) => {
-    console.log("error while trying to create game")
-  });
-
-
-}
 
 function fb_WriteScore1(userScoregamethatworks) {
   const DB = getDatabase();
@@ -434,6 +411,36 @@ function fb_DeleteRec() {
     console.log("ERROR: DeleteRec")
 
   });
+
+}
+
+
+function fb_getUsername() {
+  const DB = getDatabase();
+  const dbReference = ref(DB, "Public/" + userId + "/Name");
+  get(dbReference).then((data) => {
+    var fb_data = data.val();
+    console.log(fb_data);
+    console.log("hello")
+    var name;
+    namedIndex.innerHTML = "Play my games " + fb_data;
+  });
+
+
+}
+
+function fb_createGame() {
+const DB = getDatabase();
+  const dbReference = ref(DB, "games/GTN/activegames/" + userId);
+  //updates the database
+  update(dbReference, {Full: false}).then(() => {
+  //shows if it successfully writes
+  console.log("written")
+  }).catch((error) => {
+    //shows if it fails to send to the database
+    console.log("error while trying to create game")
+  });
+
 
 }
 /**************************************************************/
