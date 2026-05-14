@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <script type="module" src="main.mjs"></script>
+    <script type="module" src="./main.mjs"></script>
     <link rel="stylesheet" type="text/css" href="../style.css">
     <title>Guess the number lobby</title>
 
@@ -22,12 +22,14 @@
         <div class="grid-2">
             <h1></h1>
             <h1>Guess the number lobby</h1>
-                    <br>
-                    <h2>Create a game or join a random game:</h2>
-                    <br>
-                    <button onclick="location.href=''">Create game</button> <button onclick="location.href=''">Join a game</button>
-                    <br>
-                    <h3>Avaliable games:</h3>
+            <br>
+            <h2>Create a game or join a random game:</h2>
+            <br>
+            <button onclick="fb_createGame()">Create game</button> 
+            <button onclick="location.href=''">Join a
+                game</button>
+            <br>
+            <h3>Avaliable games:</h3>
         </div>
     </div>
 

@@ -63,6 +63,7 @@ export {
   fb_detectloginchangeGameMenu,
   fb_DeleteRec,
   fb_WriteRec,
+  fb_createGame,
 
 
   fb_sortedread,
@@ -209,6 +210,19 @@ function fb_getUsername() {
 
 }
 
+
+function fb_createGame() {
+const DB = getDatabase();
+  const dbReference = ref(DB, "games/GTN/activegames/" + userId);
+  update(dbReference, {Full: false}).then(() => {
+
+  console.log("written")
+  }).catch((error) => {
+    console.log("error while trying to create game")
+  });
+
+
+}
 
 function fb_WriteScore1(userScoregamethatworks) {
   const DB = getDatabase();

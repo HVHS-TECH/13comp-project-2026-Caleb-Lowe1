@@ -48,7 +48,9 @@ import { fb_DeleteRec }
     from './fb_io.mjs';
 window.fb_DeleteRec = fb_DeleteRec;
 
-
+import { fb_createGame }
+    from './fb_io.mjs';
+window.fb_createGame = fb_createGame;
 
 import { fb_sortedread }
     from './fb_io.mjs';
