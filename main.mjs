@@ -59,6 +59,9 @@ window.fb_sortedread = fb_sortedread;
 import { fb_sortedreadcoin }
     from './fb_io.mjs';
 window.fb_sortedreadcoin = fb_sortedreadcoin;
+import { fb_readListener }
+    from './fb_io.mjs';
+window.fb_readListener = fb_readListener;
 /**************************************************************/
 // index.html main code
 /**************************************************************/

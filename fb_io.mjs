@@ -64,6 +64,7 @@ export {
   fb_DeleteRec,
   fb_WriteRec,
   fb_createGame,
+  fb_readListener,
 
 
   fb_sortedread,
@@ -420,9 +421,9 @@ function fb_getUsername() {
   const dbReference = ref(DB, "Public/" + userId + "/Name");
   get(dbReference).then((data) => {
     var fb_data = data.val();
+    //puts the users name in the console log
     console.log(fb_data);
-    console.log("hello")
-    var name;
+    //where the name is put onto the page
     namedIndex.innerHTML = "Play my games " + fb_data;
   });
 
@@ -430,18 +431,32 @@ function fb_getUsername() {
 }
 
 function fb_createGame() {
-const DB = getDatabase();
+  const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
   //updates the database
-  update(dbReference, {Full: false}).then(() => {
-  //shows if it successfully writes
-  console.log("written")
+  update(dbReference, { Full: false }).then(() => {
+    //shows if it successfully writes
+    console.log("written")
   }).catch((error) => {
     //shows if it fails to send to the database
     console.log("error while trying to create game")
   });
 
 
+}
+
+function fb_readListener() {
+  console.log("Setting up listener")
+  const DB = getDatabase();
+  const dbReference = ref(DB, "games/GTN/activegames/");
+  onValue(dbReference, (snapshot) => {
+    var fb_playerstatus = snapshot.val();
+    if (fb_playerstatus != null) {
+      console.log("successfully reading")
+
+
+    }
+  })
 }
 /**************************************************************/
 // END OF CODE
