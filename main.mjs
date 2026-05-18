@@ -62,6 +62,9 @@ window.fb_sortedreadcoin = fb_sortedreadcoin;
 import { fb_readListener }
     from './fb_io.mjs';
 window.fb_readListener = fb_readListener;
+import { fb_GuessTheNumberGame }
+    from './fb_io.mjs';
+window.fb_GuessTheNumberGame = fb_GuessTheNumberGame;
 /**************************************************************/
 // index.html main code
 /**************************************************************/

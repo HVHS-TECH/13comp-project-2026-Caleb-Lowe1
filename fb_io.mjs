@@ -43,7 +43,7 @@ import { update }
 
   from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-import { query, orderByChild, limitToFirst }
+import { query, orderByChild, limitToFirst, onValue }
 
   from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
@@ -65,6 +65,7 @@ export {
   fb_WriteRec,
   fb_createGame,
   fb_readListener,
+  fb_GuessTheNumberGame,
 
 
   fb_sortedread,
@@ -453,10 +454,16 @@ function fb_readListener() {
     var fb_playerstatus = snapshot.val();
     if (fb_playerstatus != null) {
       console.log("successfully reading")
-
+      console.log(fb_playerstatus)
 
     }
   })
+}
+
+function fb_GuessTheNumberGame() {
+  const DB = getDatabase();
+  const dbReference = ref(DB, "games/GTN/activegames/");
+//update(dbReference, { Full: true })
 }
 /**************************************************************/
 // END OF CODE
