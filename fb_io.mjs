@@ -452,26 +452,29 @@ function fb_readListener() {
   const dbReference = ref(DB, "games/GTN/activegames/");
   onValue(dbReference, (snapshot) => {
     //getting the playerstatus (Full or not) data from database
-    var fb_playerstatus = snapshot.val();
-    if (fb_playerstatus != null) {
+    var playerstatus = snapshot.val();
+    if (playerstatus != null) {
       
       console.log("successfully reading")
       var GTNbuttons = window.document.getElementById("GTNbuttons");
       //creating the buttons
       GTNbuttons.innerHTML += "Making a button"
-      console.log(fb_playerstatus)
-      let GTNactivegames = Object.keys(fb_playerstatus)
+      console.log(playerstatus)
+      let GTNactivegames = Object.keys(playerstatus)
       console.log(GTNactivegames);
       //creating a loop so that the buttons are added and updated
       for (var i = 0; i < GTNactivegames.length; i++) {
         let key = GTNactivegames[i]};
-      
+        console.log("hello")
+        if (playerstatus[key]["Full"] == false) {
+        GTNbuttons.innerHTML += "<button onclick=fb_GuessTheNumberGame('" + key + "')>" + key + "</button>"
+        }
       
 
 
     }
 
-  else if (fb_playerstatus == null)
+  else if (playerstatus == null)
   {console.log("No avaliable games")
     alert("No avaliable games")
   }
@@ -480,8 +483,8 @@ function fb_readListener() {
 
 function fb_GuessTheNumberGame() {
   const DB = getDatabase();
-  const dbReference = ref(DB, "games/GTN/activegames/");
-//update(dbReference, { Full: true })
+  const dbReference = ref(DB, "games/GTN/activegames/" + userId);
+  update(dbReference, { Full: true })
 }
 /**************************************************************/
 // END OF CODE
