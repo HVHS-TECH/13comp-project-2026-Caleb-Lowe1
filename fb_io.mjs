@@ -458,7 +458,7 @@ function fb_readListener() {
       console.log("successfully reading")
       var GTNbuttons = window.document.getElementById("GTNbuttons");
       //creating the buttons
-      GTNbuttons.innerHTML += ""
+      GTNbuttons.innerHTML = null
       console.log(playerstatus)
       let GTNactivegames = Object.keys(playerstatus)
       console.log(GTNactivegames);
