@@ -454,7 +454,7 @@ function fb_readListener() {
     //getting the playerstatus (Full or not) data from database
     var playerstatus = snapshot.val();
     if (playerstatus != null) {
-      
+
       console.log("successfully reading")
       var GTNbuttons = window.document.getElementById("GTNbuttons");
       //creating the buttons
@@ -465,26 +465,26 @@ function fb_readListener() {
       //creating a loop so that the buttons are added and updated
       for (var i = 0; i < GTNactivegames.length; i++) {
         let key = GTNactivegames[i]
-      console.log(key)
+        console.log(key)
         console.log("hello")
-        
-      if (playerstatus[key]["Full"] == false) {
-        GTNbuttons.innerHTML += "<button onclick=fb_GuessTheNumberGame('" + key + "')>" + key + "</button>"
+
+        if (playerstatus[key]["Full"] == false) {
+          GTNbuttons.innerHTML += "<button onclick=fb_GuessTheNumberGame('" + key + "')>" + key + "</button>"
         }
         else if (playerstatus[key]["Full"] == true) {
-        alert("There are no avaliable games at the moment, please either press create game or wait until there is an avaliable game")
+          alert("There are no avaliable games at the moment, please either press create game or wait until there is an avaliable game")
         }
       };
-        
-      
+
+
 
 
     }
 
-  else if (playerstatus == null)
-  {console.log("No avaliable games")
-    alert("No avaliable games")
-  }
+    else if (playerstatus == null) {
+      console.log("No avaliable games")
+      alert("No avaliable games")
+    }
   })
 }
 
