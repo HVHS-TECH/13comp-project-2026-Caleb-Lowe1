@@ -471,19 +471,11 @@ function fb_readListener() {
         if (playerstatus[key]["Full"] == false) {
           GTNbuttons.innerHTML += "<button onclick=fb_GuessTheNumberGame('" + key + "')>" + key + "</button>"
         }
-        else if (playerstatus[key]["Full"] == true) {
-          alert("There are no avaliable games at the moment, please either press create game or wait until there is an avaliable game")
-        }
       };
 
 
 
 
-    }
-
-    else if (playerstatus == null) {
-      console.log("No avaliable games")
-      alert("No avaliable games")
     }
   })
 }
