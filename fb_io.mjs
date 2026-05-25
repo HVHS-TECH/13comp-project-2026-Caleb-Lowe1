@@ -458,17 +458,24 @@ function fb_readListener() {
       console.log("successfully reading")
       var GTNbuttons = window.document.getElementById("GTNbuttons");
       //creating the buttons
-      GTNbuttons.innerHTML += "Making a button"
+      GTNbuttons.innerHTML += ""
       console.log(playerstatus)
       let GTNactivegames = Object.keys(playerstatus)
       console.log(GTNactivegames);
       //creating a loop so that the buttons are added and updated
       for (var i = 0; i < GTNactivegames.length; i++) {
-        let key = GTNactivegames[i]};
+        let key = GTNactivegames[i]
+      console.log(key)
         console.log("hello")
-        if (playerstatus[key]["Full"] == false) {
+        
+      if (playerstatus[key]["Full"] == false) {
         GTNbuttons.innerHTML += "<button onclick=fb_GuessTheNumberGame('" + key + "')>" + key + "</button>"
         }
+        else if (playerstatus[key]["Full"] == true) {
+        alert("There are no avaliable games at the moment, please either press create game or wait until there is an avaliable game")
+        }
+      };
+        
       
 
 
