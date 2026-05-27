@@ -65,6 +65,11 @@ window.fb_readListener = fb_readListener;
 import { fb_GuessTheNumberGame }
     from './fb_io.mjs';
 window.fb_GuessTheNumberGame = fb_GuessTheNumberGame;
+
+import { fb_sendplayertogame }
+    from './fb_io.mjs';
+window.fb_sendplayertogame = fb_sendplayertogame;
+
 /**************************************************************/
 // index.html main code
 /**************************************************************/

@@ -66,6 +66,7 @@ export {
   fb_createGame,
   fb_readListener,
   fb_GuessTheNumberGame,
+  fb_sendplayertogame,
 
 
   fb_sortedread,
@@ -436,6 +437,7 @@ function fb_createGame() {
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
   //updates the database
   update(dbReference, { Full: false }).then(() => {
+    location.href = "GTNloadingpage.html";
     //shows if it successfully writes
     console.log("written")
   }).catch((error) => {
@@ -480,10 +482,25 @@ function fb_readListener() {
   })
 }
 
-function fb_GuessTheNumberGame() {
+function fb_GuessTheNumberGame(player) {
+  const DB = getDatabase();
+  const dbReference = ref(DB, "games/GTN/activegames/" + player);
+  update(dbReference, { Full: true }).then(() => {
+    location.href("GTNgame.html")
+})
+}
+
+function fb_sendplayertogame() {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
-  update(dbReference, { Full: true })
+  onValue(dbReference, (snapshot) => {
+    var playerstatus = snapshot.val();
+  if (playerstatus[key]["Full"] == true) {
+    location.href = "GTNgame.html"
+          
+        }
+
+  })
 }
 /**************************************************************/
 // END OF CODE
