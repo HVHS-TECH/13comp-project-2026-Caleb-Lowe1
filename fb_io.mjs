@@ -485,6 +485,7 @@ function fb_readListener() {
 function fb_GuessTheNumberGame(player) {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + player);
+  //updated the database to set the game status to full then send the player to the game
   update(dbReference, { Full: true }).then(() => {
     location.href = ("GTNgame.html")
 })
@@ -502,6 +503,26 @@ function fb_sendplayertogame() {
 
   })
 }
+
+function fb_detectloginchange() {
+  console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const AUTH = getAuth();
+
+  onAuthStateChanged(AUTH, (user) => {
+    if (user) {
+      currentUser = user;
+      userId = user.uid;
+      console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
+      fb_sendplayertogame();
+    } else {
+      console.log("⚠️ Not logged in — redirecting to registration.html");
+      location.href = "registration.html";
+      
+    }
+  }, (error) => {
+    console.error("❌ Auth detection error:", error);
+  });
+};
 /**************************************************************/
 // END OF CODE
 /**************************************************************/
