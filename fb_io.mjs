@@ -67,6 +67,7 @@ export {
   fb_readListener,
   fb_GuessTheNumberGame,
   fb_sendplayertogame,
+  fb_detectloginchangeGTN,
 
 
   fb_sortedread,
@@ -504,7 +505,7 @@ function fb_sendplayertogame() {
   })
 }
 
-function fb_detectloginchange() {
+function fb_detectloginchangeGTN() {
   console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const AUTH = getAuth();
 

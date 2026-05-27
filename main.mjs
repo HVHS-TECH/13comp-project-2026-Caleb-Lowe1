@@ -70,6 +70,10 @@ import { fb_sendplayertogame }
     from './fb_io.mjs';
 window.fb_sendplayertogame = fb_sendplayertogame;
 
+
+import { fb_detectloginchangeGTN }
+    from './fb_io.mjs';
+window.fb_detectloginchangeGTN = fb_detectloginchangeGTN;
 /**************************************************************/
 // index.html main code
 /**************************************************************/
