@@ -486,7 +486,7 @@ function fb_GuessTheNumberGame(player) {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + player);
   update(dbReference, { Full: true }).then(() => {
-    location.href("GTNgame.html")
+    location.href = ("GTNgame.html")
 })
 }
 
