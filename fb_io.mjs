@@ -497,7 +497,7 @@ function fb_sendplayertogame() {
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
   onValue(dbReference, (snapshot) => {
     var playerstatus = snapshot.val();
-  if (playerstatus[key]["Full"] == true) {
+  if (playerstatus["Full"] == true) {
     location.href = "GTNgame.html"
           
         }
