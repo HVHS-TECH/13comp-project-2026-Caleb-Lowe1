@@ -68,13 +68,13 @@ export {
   fb_GuessTheNumberGame,
   fb_sendplayertogame,
   fb_detectloginchangeGTN,
-
-
   fb_sortedread,
   fb_WriteScore,
   fb_WriteScore1,
   fb_WriteRecPrivate,
-  fb_sortedreadcoin
+  fb_sortedreadcoin,
+  generaterandomnumber
+ 
 };
 /******************************************************/
 // fb_login()
@@ -505,6 +505,8 @@ function fb_sendplayertogame() {
   })
 }
 
+
+
 function fb_detectloginchangeGTN() {
   console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const AUTH = getAuth();
@@ -524,6 +526,22 @@ function fb_detectloginchangeGTN() {
     console.error("❌ Auth detection error:", error);
   });
 };
+
+
+function GTNgamestart() {
+
+}
+
+function generaterandomnumber() {
+const Number = Math.ceil(Math.random() * 100);
+console.log(Number)
+}
+
+
+function playerturns() {
+
+
+}
 /**************************************************************/
 // END OF CODE
 /**************************************************************/
