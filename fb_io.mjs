@@ -68,6 +68,7 @@ export {
   fb_GuessTheNumberGame,
   fb_sendplayertogame,
   fb_detectloginchangeGTN,
+  fb_cancelgame,
 
 
   fb_sortedread,
@@ -449,6 +450,19 @@ function fb_createGame() {
 
 }
 
+function fb_cancelgame() {
+  const DB = getDatabase();
+  const dbReference = ref(DB, "games/GTN/activegames/" + userId);
+  update(dbReference, { Full: true }).then(() => {
+    location.href = "GTNlobby.html";
+    //shows if it successfully writes
+    console.log("written")
+  }).catch((error) => {
+    //shows if it fails to send to the database
+    console.log("error while trying to cancel game")
+  });
+}
+
 function fb_readListener() {
   console.log("Setting up listener")
   const DB = getDatabase();
@@ -495,10 +509,12 @@ function fb_GuessTheNumberGame(player) {
 function fb_sendplayertogame() {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
+
   onValue(dbReference, (snapshot) => {
     var playerstatus = snapshot.val();
+    //if the game is full then it will send the user who filled the game to gameGTN
   if (playerstatus["Full"] == true) {
-    location.href = "GTNgame.html"
+    location.href = "GTNlobby.html"
           
         }
 

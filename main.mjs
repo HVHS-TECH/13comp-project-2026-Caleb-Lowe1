@@ -74,6 +74,11 @@ window.fb_sendplayertogame = fb_sendplayertogame;
 import { fb_detectloginchangeGTN }
     from './fb_io.mjs';
 window.fb_detectloginchangeGTN = fb_detectloginchangeGTN;
+
+
+import { fb_cancelgame }
+    from './fb_io.mjs';
+window.fb_cancelgame = fb_cancelgame;
 /**************************************************************/
 // index.html main code
 /**************************************************************/
