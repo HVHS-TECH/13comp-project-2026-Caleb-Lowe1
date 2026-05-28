@@ -74,11 +74,6 @@ window.fb_sendplayertogame = fb_sendplayertogame;
 import { fb_detectloginchangeGTN }
     from './fb_io.mjs';
 window.fb_detectloginchangeGTN = fb_detectloginchangeGTN;
-
-import { generaterandomnumber }
-    from './fb_io.mjs';
-window.generaterandomnumber() = generaterandomnumber();
-
 /**************************************************************/
 // index.html main code
 /**************************************************************/
