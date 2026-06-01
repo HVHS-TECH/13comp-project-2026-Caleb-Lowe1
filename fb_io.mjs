@@ -455,7 +455,9 @@ function fb_createGame() {
 function fb_cancelgame() {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
+  //update the database and sets the playerstatus to full, then it sends the player back to the GTNlobby
   update(dbReference, { Full: true }).then(() => {
+    //just here to ensure that the player is actually sent back to the lobby, don't actually need
     location.href = "GTNlobby.html";
     //shows if it successfully writes
     console.log("written")
