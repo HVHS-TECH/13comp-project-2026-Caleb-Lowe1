@@ -84,6 +84,11 @@ import { fb_generaterandomnumber }
     from './fb_io.mjs';
 window.fb_generaterandomnumber = fb_generaterandomnumber;
 
+import { fb_detectloginchangenumber }
+    from './fb_io.mjs';
+window.fb_detectloginchangenumber = fb_detectloginchangenumber;
+
+
 /**************************************************************/
 // index.html main code
 /**************************************************************/

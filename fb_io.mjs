@@ -74,7 +74,8 @@ export {
   fb_WriteScore1,
   fb_WriteRecPrivate,
   fb_sortedreadcoin,
-   fb_generaterandomnumber,
+  fb_generaterandomnumber,
+  fb_detectloginchangenumber
  
 };
 /******************************************************/
@@ -546,6 +547,27 @@ function fb_detectloginchangeGTN() {
 };
 
 
+function fb_detectloginchangenumber() {
+  console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const AUTH = getAuth();
+
+  onAuthStateChanged(AUTH, (user) => {
+    if (user) {
+      currentUser = user;
+      userId = user.uid;
+      console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
+      fb_generaterandomnumber()
+    } else {
+      console.log("⚠️ Not logged in — redirecting to registration.html");
+      location.href = "registration.html";
+      
+    }
+  }, (error) => {
+    console.error("❌ Auth detection error:", error);
+  });
+};
+
+
 function GTNgamestart() {
 
 }
@@ -555,9 +577,11 @@ const AUTH = getAuth();
 const DB = getDatabase();
 const dbReference = ref(DB, "games/GTN/number/" + userId);
 const Number = Math.ceil(Math.random() * 100);
+//generates number between 1 and 100
 console.log(Number)
 update(dbReference, { Number: "Number" }).then(() => {
 console.log("Successfully sent number")
+//updates the database with the new generated number
 })
 };
 
