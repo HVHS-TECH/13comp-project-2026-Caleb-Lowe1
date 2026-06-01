@@ -79,6 +79,11 @@ window.fb_detectloginchangeGTN = fb_detectloginchangeGTN;
 import { fb_cancelgame }
     from './fb_io.mjs';
 window.fb_cancelgame = fb_cancelgame;
+
+import { fb_generaterandomnumber }
+    from './fb_io.mjs';
+window.fb_generaterandomnumber = fb_generaterandomnumber;
+
 /**************************************************************/
 // index.html main code
 /**************************************************************/

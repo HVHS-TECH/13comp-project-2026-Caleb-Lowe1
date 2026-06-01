@@ -69,14 +69,12 @@ export {
   fb_sendplayertogame,
   fb_detectloginchangeGTN,
   fb_cancelgame,
-
-
   fb_sortedread,
   fb_WriteScore,
   fb_WriteScore1,
   fb_WriteRecPrivate,
   fb_sortedreadcoin,
-  generaterandomnumber
+   fb_generaterandomnumber,
  
 };
 /******************************************************/
@@ -552,10 +550,16 @@ function GTNgamestart() {
 
 }
 
-function generaterandomnumber() {
+function fb_generaterandomnumber() {
+const AUTH = getAuth(); 
+const DB = getDatabase();
+const dbReference = ref(DB, "games/GTN/number/" + userId);
 const Number = Math.ceil(Math.random() * 100);
 console.log(Number)
-}
+update(dbReference, { Number: "Number" }).then(() => {
+console.log("Successfully sent number")
+})
+};
 
 
 function playerturns() {
