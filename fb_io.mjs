@@ -568,7 +568,7 @@ function fb_detectloginchangenumber() {
 };
 
 
-function GTNgamestart() {
+function GTNgamestart(Number) {
 
 }
 
@@ -576,10 +576,10 @@ function fb_generaterandomnumber() {
 const AUTH = getAuth(); 
 const DB = getDatabase();
 const dbReference = ref(DB, "games/GTN/number/" + userId);
-const Number = Math.ceil(Math.random() * 100);
+const guessNumber = Math.ceil(Math.random() * 100);
 //generates number between 1 and 100
-console.log(Number)
-update(dbReference, { Number: Number }).then(() => {
+console.log(guessNumber)
+update(dbReference, { Number: guessNumber }).then(() => {
 console.log("Successfully sent number")
 //updates the database with the new generated number
 })
