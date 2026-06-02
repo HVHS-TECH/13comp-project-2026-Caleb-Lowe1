@@ -568,7 +568,7 @@ function fb_detectloginchangenumber() {
 };
 
 
-function GTNgamestart(Number) {
+function GTNgamestart(guessNumber) {
 
 }
 
