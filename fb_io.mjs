@@ -579,7 +579,7 @@ const dbReference = ref(DB, "games/GTN/number/" + userId);
 const Number = Math.ceil(Math.random() * 100);
 //generates number between 1 and 100
 console.log(Number)
-update(dbReference, { Number: "Number" }).then(() => {
+update(dbReference, { Number: Number }).then(() => {
 console.log("Successfully sent number")
 //updates the database with the new generated number
 })
