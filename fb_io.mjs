@@ -76,7 +76,7 @@ export {
   fb_sortedreadcoin,
   fb_generaterandomnumber,
   fb_detectloginchangenumber
- 
+
 };
 /******************************************************/
 // fb_login()
@@ -506,7 +506,7 @@ function fb_GuessTheNumberGame(player) {
   //updated the database to set the game status to full then send the player to the game
   update(dbReference, { Full: true }).then(() => {
     location.href = ("GTNgame.html")
-})
+  })
 }
 
 function fb_sendplayertogame() {
@@ -516,10 +516,10 @@ function fb_sendplayertogame() {
   onValue(dbReference, (snapshot) => {
     var playerstatus = snapshot.val();
     //if the game is full then it will send the user who filled the game to gameGTN
-  if (playerstatus["Full"] == true) {
-    location.href = "GTNlobby.html"
-          
-        }
+    if (playerstatus["Full"] == true) {
+      location.href = "GTNlobby.html"
+
+    }
 
   })
 }
@@ -539,7 +539,7 @@ function fb_detectloginchangeGTN() {
     } else {
       console.log("⚠️ Not logged in — redirecting to registration.html");
       location.href = "registration.html";
-      
+
     }
   }, (error) => {
     console.error("❌ Auth detection error:", error);
@@ -560,7 +560,7 @@ function fb_detectloginchangenumber() {
     } else {
       console.log("⚠️ Not logged in — redirecting to registration.html");
       location.href = "registration.html";
-      
+
     }
   }, (error) => {
     console.error("❌ Auth detection error:", error);
@@ -568,27 +568,55 @@ function fb_detectloginchangenumber() {
 };
 
 
-function GTNgamestart(guessNumber) {
-console.log("test, this is from GTNgamestart " + guessNumber)
+function GTNgamestart() {
+  playerturnhost();
 }
 
 function fb_generaterandomnumber() {
-const AUTH = getAuth(); 
-const DB = getDatabase();
-const dbReference = ref(DB, "games/GTN/number/" + userId);
-const guessNumber = Math.ceil(Math.random() * 100);
-//generates number between 1 and 100
-console.log(guessNumber)
-update(dbReference, { Number: guessNumber }).then(() => {
-console.log("Successfully sent number")
-GTNgamestart(guessNumber);
-//updates the database with the new generated number
-})
+  const AUTH = getAuth();
+  const DB = getDatabase();
+  const dbReference = ref(DB, "games/GTN/number/" + userId);
+  const guessNumber = Math.ceil(Math.random() * 100);
+  //generates number between 1 and 100
+  console.log(guessNumber)
+  update(dbReference, { Number: guessNumber }).then(() => {
+    console.log("Successfully sent number")
+    //updates the database with the new generated number
+    GTNgamestart(guessNumber);
+  })
 };
 
 
-function playerturns() {
+function playerturnhost(guessNumber) {
+var playerhostguess;
+  if (playerhostguess == guessNumber) {
+        console.log("test " + playerhostguess)
+    console.log("Congrats! You win")
+  }
+  else if (playerhostguess > guessNumber) {
+    console.log("Guess is too high")
+  }
+  else if (playerhostguess < guessNumber) {
+    console.log("Guess is too low")
+  }
 
+}
+
+function playerturnguest() {
+var playerguestguess;
+console.log("testing " + playerguestguess)
+  if (playerguestguess == guessNumber) {
+
+    console.log("Congrats! You win")
+  }
+
+  else if (playerguestguess > guessNumber) {
+    console.log("Too high")
+  }
+
+  else if (playerguestguess < guessNumber) {
+    console.log("Too low")
+  }
 
 }
 /**************************************************************/
