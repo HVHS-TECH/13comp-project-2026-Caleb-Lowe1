@@ -521,7 +521,7 @@ function fb_sendplayertogame() {
     var playerstatus = snapshot.val();
     //if the game is full then it will send the user who filled the game to gameGTN
     if (playerstatus["Full"] == true) {
-      location.href = "GTNlobby.html"
+      location.href = "GTNgame.html"
 
     }
 
