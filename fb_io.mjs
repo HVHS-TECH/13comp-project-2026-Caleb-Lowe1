@@ -507,6 +507,10 @@ function fb_GuessTheNumberGame(player) {
   update(dbReference, { Full: true }).then(() => {
     location.href = ("GTNgame.html")
   })
+
+  update(dbReference, { hostId: player }).then(() => {
+    console.log("hello")
+  })
 }
 
 function fb_sendplayertogame() {
@@ -590,7 +594,7 @@ function fb_generaterandomnumber() {
 function playerturnhost(guessNumber) {
 var playerhostguess;
   if (playerhostguess == guessNumber) {
-        console.log("test " + playerhostguess)
+     
     console.log("Congrats! You win")
   }
   else if (playerhostguess > guessNumber) {
@@ -604,7 +608,6 @@ var playerhostguess;
 
 function playerturnguest() {
 var playerguestguess;
-console.log("testing " + playerguestguess)
   if (playerguestguess == guessNumber) {
 
     console.log("Congrats! You win")
