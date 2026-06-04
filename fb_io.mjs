@@ -508,7 +508,7 @@ function fb_GuessTheNumberGame(player) {
     location.href = ("GTNgame.html")
   })
 
-  update(dbReference, { hostId: player }).then(() => {
+  update(dbReference, { guestId: userId }).then(() => {
     console.log("hello")
   })
 }
