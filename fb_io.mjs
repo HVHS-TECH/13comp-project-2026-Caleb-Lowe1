@@ -1,4 +1,4 @@
-//Almost all code here taken straight from year 12 assesment
+//A lot of code here taken straight from year 12 assesment
 
 //**************************************************************/
 // fb_io.mjs
@@ -438,6 +438,7 @@ function fb_getUsername() {
 function fb_createGame() {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
+  const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus")
   //updates the database
   update(dbReference, { Full: false }).then(() => {
     location.href = "GTNloadingpage.html";
@@ -448,6 +449,10 @@ function fb_createGame() {
     console.log("error while trying to create game")
   });
 
+  update(hoststatus, { isHost: true }).then(() => {
+  console.log("User is the host")
+  }
+)
 
 }
 
@@ -504,6 +509,7 @@ function fb_GuessTheNumberGame(player) {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + player);
     const guestref = ref(DB, "games/GTN/activegames/" + userId);
+      const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus")
   //updated the database to set the game status to full then send the player to the game
   update(dbReference, { Full: true }).then(() => {
     location.href = ("GTNgame.html")
@@ -516,6 +522,11 @@ function fb_GuessTheNumberGame(player) {
     console.log("Successfully sent hostId")
     //sends the hosts UID to the guest
   })
+
+  update(hoststatus, { isHost: false }).then(() => {
+  console.log("User is not the host")
+  }
+)
 }
 
 function fb_sendplayertogame() {
