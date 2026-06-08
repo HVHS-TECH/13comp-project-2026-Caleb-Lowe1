@@ -503,6 +503,7 @@ function fb_readListener() {
 function fb_GuessTheNumberGame(player) {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + player);
+    const guestref = ref(DB, "games/GTN/activegames/" + userId);
   //updated the database to set the game status to full then send the player to the game
   update(dbReference, { Full: true }).then(() => {
     location.href = ("GTNgame.html")
@@ -510,6 +511,10 @@ function fb_GuessTheNumberGame(player) {
 
   update(dbReference, { guestId: userId }).then(() => {
     console.log("hello")
+  })
+  update(guestref, { hostId: player }).then(() => {
+    console.log("Successfully sent hostId")
+    //sends the hosts UID to the guest
   })
 }
 
