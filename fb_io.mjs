@@ -536,6 +536,7 @@ function fb_sendplayertogame() {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
   const host = ref(DB, "games/GTN/activegames/" + userId + "/host")
+    fb_generaterandomnumber()
   onValue(dbReference, (snapshot) => {
     var playerstatus = snapshot.val();
     //if the game is full then it will send the user who filled the game to gameGTN
