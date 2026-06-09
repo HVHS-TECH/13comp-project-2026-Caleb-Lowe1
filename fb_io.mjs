@@ -504,11 +504,18 @@ function fb_GuessTheNumberGame(player) {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + player);
     const guestref = ref(DB, "games/GTN/activegames/" + userId);
-  //updated the database to set the game status to full then send the player to the game
-  update(dbReference, { Full: true }).then(() => {
-    location.href = ("GTNgame.html")
-  })
+    const guessingnumber = ref(DB, "games/GTN/activegames/number/" + player + "/Number")
+    
+    
 
+  get(guessingnumber).then((snapshot) => {
+    var guessNumber = snapshot.val();
+    
+    console.log(guessingnumber)
+    console.log(snapshot.val())
+    console.log(player)
+    console.log("testguessingnumber")  
+  })
   update(dbReference, { guestId: userId }).then(() => {
     console.log("hello")
   })
@@ -516,12 +523,20 @@ function fb_GuessTheNumberGame(player) {
     console.log("Successfully sent hostId")
     //sends the hosts UID to the guest
   })
+
+    //if the game is full then it will send the user who filled the game to gameGTN
+    //updated the database to set the game status to full then send the player to the game
+  update(dbReference, { Full: true }).then(() => {
+    location.href = ("GTNgame.html")
+  })
+
 }
 
 function fb_sendplayertogame() {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
   const host = ref(DB, "games/GTN/activegames/" + userId + "/host")
+  fb_generaterandomnumber();
   onValue(dbReference, (snapshot) => {
     var playerstatus = snapshot.val();
     //if the game is full then it will send the user who filled the game to gameGTN
@@ -567,7 +582,6 @@ function fb_detectloginchangenumber() {
       currentUser = user;
       userId = user.uid;
       console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
-      fb_generaterandomnumber()
     } else {
       console.log("⚠️ Not logged in — redirecting to registration.html");
       location.href = "registration.html";
@@ -580,13 +594,12 @@ function fb_detectloginchangenumber() {
 
 
 function GTNgamestart() {
-  playerturnhost();
 }
 
 function fb_generaterandomnumber() {
   const AUTH = getAuth();
   const DB = getDatabase();
-  const dbReference = ref(DB, "games/GTN/number/" + userId);
+  const dbReference = ref(DB, "games/GTN/activegames/number/" + userId);
   const guessNumber = Math.ceil(Math.random() * 100);
   //generates number between 1 and 100
   console.log(guessNumber)
@@ -613,7 +626,7 @@ var playerhostguess;
 
 }
 
-function playerturnguest() {
+function playerturnguest(guessNumber) {
 var playerguestguess;
   if (playerguestguess == guessNumber) {
 
