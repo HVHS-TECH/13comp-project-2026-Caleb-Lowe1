@@ -541,7 +541,7 @@ function fb_sendplayertogame() {
     //if the game is full then it will send the user who filled the game to gameGTN
     if (playerstatus["Full"] == true) {
       location.href = "GTNgame.html"
-
+      fb_generaterandomnumber()
       update(host, {hostId: userId})
       
     }
@@ -581,7 +581,6 @@ function fb_detectloginchangenumber() {
       currentUser = user;
       userId = user.uid;
       console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
-      fb_generaterandomnumber()
     } else {
       console.log("⚠️ Not logged in — redirecting to registration.html");
       location.href = "registration.html";
