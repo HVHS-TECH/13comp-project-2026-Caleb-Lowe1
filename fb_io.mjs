@@ -572,7 +572,7 @@ function fb_detectloginchangeGTN() {
 };
 
 
-function fb_detectloginchangenumber() {
+function fb_detectloginchangenumber(guessNumber) {
   console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const AUTH = getAuth();
 
@@ -581,6 +581,7 @@ function fb_detectloginchangenumber() {
       currentUser = user;
       userId = user.uid;
       console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
+      console.log(guessNumber)
     } else {
       console.log("⚠️ Not logged in — redirecting to registration.html");
       location.href = "registration.html";
