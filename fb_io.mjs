@@ -627,7 +627,7 @@ var playerhostguess;
 
 }
 
-function playerturnguest() {
+function playerturnguest(guessNumber) {
 var playerguestguess;
   if (playerguestguess == guessNumber) {
 
