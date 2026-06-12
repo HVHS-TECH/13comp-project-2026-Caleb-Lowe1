@@ -503,18 +503,18 @@ function fb_readListener() {
 function fb_GuessTheNumberGame(player) {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + player);
-    const guestref = ref(DB, "games/GTN/activegames/" + userId);
-    const guessingnumber = ref(DB, "games/GTN/activegames/number/" + player + "/Number")
-    
-    
+  const guestref = ref(DB, "games/GTN/activegames/" + userId);
+  const guessingnumber = ref(DB, "games/GTN/activegames/number/" + player + "/Number")
+
+
 
   get(guessingnumber).then((snapshot) => {
     var guessNumber = snapshot.val();
-    
+
     console.log(guessingnumber)
     console.log(snapshot.val())
     console.log(player)
-    console.log("testguessingnumber")  
+    console.log("testguessingnumber")
   })
   update(dbReference, { guestId: userId }).then(() => {
     console.log("hello")
@@ -524,8 +524,8 @@ function fb_GuessTheNumberGame(player) {
     //sends the hosts UID to the guest
   })
 
-    //if the game is full then it will send the user who filled the game to gameGTN
-    //updated the database to set the game status to full then send the player to the game
+  //if the game is full then it will send the user who filled the game to gameGTN
+  //updated the database to set the game status to full then send the player to the game
   update(dbReference, { Full: true }).then(() => {
     location.href = ("GTNgame.html")
   })
@@ -542,10 +542,10 @@ function fb_sendplayertogame() {
     if (playerstatus["Full"] == true) {
       location.href = "GTNgame.html"
       fb_generaterandomnumber()
-      update(host, {hostId: userId})
-      
+      update(host, { hostId: userId })
+
     }
-    
+
   })
 }
 
@@ -612,9 +612,9 @@ function fb_generaterandomnumber() {
 };
 
 function playerturnhost(guessNumber) {
-var playerhostguess;
+  var playerhostguess;
   if (playerhostguess == guessNumber) {
-     
+
     console.log("Congrats! You win")
   }
   else if (playerhostguess > guessNumber) {
@@ -627,7 +627,7 @@ var playerhostguess;
 }
 
 function playerturnguest(guessNumber) {
-var playerguestguess;
+  var playerguestguess;
   if (playerguestguess == guessNumber) {
 
     console.log("Congrats! You win")
