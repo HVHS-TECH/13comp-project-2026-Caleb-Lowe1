@@ -675,6 +675,7 @@ function writenumber() {
 
       //✅ Code for a successful write goes here
       console.log("successful write")
+      console.log(guess)
 
 
     }).catch((error) => {
