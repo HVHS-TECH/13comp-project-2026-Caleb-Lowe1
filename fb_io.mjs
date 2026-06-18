@@ -670,7 +670,8 @@ function writenumber() {
   //checking if the guess is valid
   if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
   else {
-    update(writingthenumber, { Playerguess: false }).then(() => {
+    //sends the players guess to the database
+    update(writingthenumber, { Playerguess: guess }).then(() => {
 
       //✅ Code for a successful write goes here
       console.log("successful write")
@@ -681,6 +682,7 @@ function writenumber() {
       //❌ Code for a write error goes here
       console.log("Writing error")
     })
+    //sets Playerturn to false
     update(playerturn, { Playerturn: false }).then(() => {
       console.log("successfully set playerturn to false")
     })
