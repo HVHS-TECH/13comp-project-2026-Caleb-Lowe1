@@ -667,22 +667,23 @@ function writenumber() {
   const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed" + userId);
   const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
   var guess = document.getElementById("guess").value;
-  if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) {alert("this is not a valid number please guess again")}
+  //checking if the guess is valid
+  if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
   else {
-  update(writingthenumber, { Playerguess: guess }).then(() => {
+    update(writingthenumber, { Playerguess: false }).then(() => {
 
-    //✅ Code for a successful write goes here
-    console.log("successful write")
+      //✅ Code for a successful write goes here
+      console.log("successful write")
 
 
-  }).catch((error) => {
+    }).catch((error) => {
 
-    //❌ Code for a write error goes here
-    console.log("Writing error")
-  })
-  update(playerturn, {Playerturn: false}).then(() => {
-    console.log("successfully set playerturn to false")
-  })
+      //❌ Code for a write error goes here
+      console.log("Writing error")
+    })
+    update(playerturn, { Playerturn: false }).then(() => {
+      console.log("successfully set playerturn to false")
+    })
   }
 }
 /**************************************************************/
