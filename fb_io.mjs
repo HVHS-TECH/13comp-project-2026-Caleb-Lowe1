@@ -572,7 +572,7 @@ function fb_detectloginchangeGTN() {
 };
 
 
-function fb_detectloginchangenumber(guessNumber) {
+function fb_detectloginchangenumber() {
   console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const AUTH = getAuth();
 
@@ -610,9 +610,18 @@ function fb_generaterandomnumber() {
     GTNgamestart(guessNumber);
   })
 };
-
-function playerturnhost(guessNumber) {
+function playerturnhost() {
   var playerhostguess;
+  const DB = getDatabase();
+  const numberRef =
+    ref(DB, "games/GTN/activegames/number/" + userId + "/Number");
+  get(numberRef).then((snapshot) => {
+    const guessNumber = snapshot.val();
+
+    if (guess === guessNumber) {
+      console.log("Correct!");
+    }
+  });
   if (playerhostguess == guessNumber) {
 
     console.log("Congrats! You win")
@@ -626,8 +635,18 @@ function playerturnhost(guessNumber) {
 
 }
 
-function playerturnguest(guessNumber) {
+
+function playerturnguest() {
   var playerguestguess;
+  const DB = getDatabase();
+  ref(DB, "games/GTN/activegames/number/" + hostId + "/Number");
+  get(numberRef).then((snapshot) => {
+    const guessNumber = snapshot.val();
+
+    if (guess === guessNumber) {
+      console.log("Correct!");
+    }
+  });
   if (playerguestguess == guessNumber) {
 
     console.log("Congrats! You win")
@@ -642,7 +661,6 @@ function playerturnguest(guessNumber) {
   }
 
 }
-
 
 function writenumber() {
   const DB = getDatabase();
