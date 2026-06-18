@@ -642,6 +642,31 @@ function playerturnguest(guessNumber) {
   }
 
 }
+
+
+function writenumber() {
+  const DB = getDatabase();
+  const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed" + userId);
+  const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
+  var guess = document.getElementById("guess").value;
+  if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) {alert("this is not a valid number please guess again")}
+  else {
+  update(writingthenumber, { Playerguess: guess }).then(() => {
+
+    //✅ Code for a successful write goes here
+    console.log("successful write")
+
+
+  }).catch((error) => {
+
+    //❌ Code for a write error goes here
+    console.log("Writing error")
+  })
+  update(playerturn, {Playerturn: false}).then(() => {
+    console.log("successfully set playerturn to false")
+  })
+  }
+}
 /**************************************************************/
 // END OF CODE
 /**************************************************************/
