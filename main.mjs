@@ -88,6 +88,9 @@ import { fb_detectloginchangenumber }
     from './fb_io.mjs';
 window.fb_detectloginchangenumber = fb_detectloginchangenumber;
 
+import { fb_guestorhost }
+    from './fb_io.mjs';
+window.fb_guestorhost = fb_guestorhost;
 
 /**************************************************************/
 // index.html main code

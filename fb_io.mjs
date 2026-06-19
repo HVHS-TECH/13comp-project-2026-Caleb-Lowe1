@@ -75,7 +75,9 @@ export {
   fb_WriteRecPrivate,
   fb_sortedreadcoin,
   fb_generaterandomnumber,
-  fb_detectloginchangenumber
+  fb_detectloginchangenumber,
+  fb_guestorhost
+  
 
 };
 /******************************************************/
@@ -438,6 +440,7 @@ function fb_getUsername() {
 function fb_createGame() {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
+  const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus")
   //updates the database
   update(dbReference, { Full: false }).then(() => {
     location.href = "GTNloadingpage.html";
@@ -447,6 +450,10 @@ function fb_createGame() {
     //shows if it fails to send to the database
     console.log("error while trying to create game")
   });
+  update(hoststatus, { isHost: true }).then(() => {
+  console.log("User is the host")
+  }
+)
 
 
 }
@@ -502,6 +509,7 @@ function fb_readListener() {
 
 function fb_GuessTheNumberGame(player) {
   const DB = getDatabase();
+  const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus")
   const dbReference = ref(DB, "games/GTN/activegames/" + player);
   const guestref = ref(DB, "games/GTN/activegames/" + userId);
   const guessingnumber = ref(DB, "games/GTN/activegames/number/" + player + "/Number")
@@ -530,6 +538,10 @@ function fb_GuessTheNumberGame(player) {
     location.href = ("GTNgame.html")
   })
 
+  update(hoststatus, { isHost: false }).then(() => {
+  console.log("User is not the host")
+  }
+)
 }
 
 function fb_sendplayertogame() {
@@ -581,7 +593,6 @@ function fb_detectloginchangenumber() {
       currentUser = user;
       userId = user.uid;
       console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
-      console.log(guessNumber)
     } else {
       console.log("⚠️ Not logged in — redirecting to registration.html");
       location.href = "registration.html";
@@ -639,7 +650,7 @@ function playerturnhost() {
 function playerturnguest() {
   var playerguestguess;
   const DB = getDatabase();
-  ref(DB, "games/GTN/activegames/number/" + hostId + "/Number");
+  const numberRef = (DB, "games/GTN/activegames/number/" + hostId + "/Number");
   get(numberRef).then((snapshot) => {
     const guessNumber = snapshot.val();
 
@@ -688,6 +699,26 @@ function writenumber() {
       console.log("successfully set playerturn to false")
     })
   }
+}
+
+function fb_guestorhost() {
+const DB = getDatabase();
+const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus/");
+get(hoststatus).then((snapshot) => {
+    const isuserhost = snapshot.val();
+    console.log(isuserhost)
+    //this happens if the user is the host
+    if (isuserhost["isHost"] == true) {
+      console.log("you are the host")
+    }
+    //this happens if the user is the host
+    else if (isuserhost["isHost"] == false) {
+      console.log("you are the guest")
+    }
+    //if there is an issue and isHost is null 
+    else if (isuserhost["isHost"] == null)
+    {console.log("error, cannot determine if you are host or guest")}
+  });
 }
 /**************************************************************/
 // END OF CODE
