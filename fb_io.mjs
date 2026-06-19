@@ -702,7 +702,7 @@ function writtenumberguest() {
 
     //sets Playerturn to false
     update(playerturn, { Playerturn: false }).then(() => {
-      console.log("successfully set playerturn to e")
+      console.log("successfully set playerturn to false")
     })
     //sets the hosts Playerturn to true
     update(playerturnhost, { Playerturn: true }).then(() => {
@@ -767,7 +767,7 @@ function writtenumberhost() {
     })
     //sets the hosts Playerturn to true
     update(playerturnguest, { Playerturn: true }).then(() => {
-      console.log("successfully set playerturnhost to true")
+      console.log("successfully set playerturnguest to true")
     })
   }
 
