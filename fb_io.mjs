@@ -653,8 +653,8 @@ function fb_generaterandomnumber() {
 
 function writtenumberguest() {
   const DB = getDatabase();
-  const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed" + userId);
-  const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
+  const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed/" + userId);
+  const playerturn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
   //takes the guess from what the user submitted and turns it from a string to a number and defines it as a variable
   var guess = Number(document.getElementById("guess").value);
   var playerguestguess;
@@ -663,7 +663,7 @@ function writtenumberguest() {
   //takes the randomly generated number from sessionStorage to be used in this function
   let guessNumber = Number(sessionStorage.getItem("guessNumber"));
   console.log(hostId)
-  const playerturnhost = ref(DB, "games/GTN/activegames/playerturn" + hostId)
+  const playerturnhost = ref(DB, "games/GTN/activegames/playerturn/" + hostId)
 
   
   //checking if the guess is valid
@@ -716,12 +716,12 @@ function writtenumberguest() {
 
 function writtenumberhost() {
   const DB = getDatabase();
-  const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed" + userId);
-  const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
+  const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed/" + userId);
+  const playerturn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
   var guess = Number(document.getElementById("guess").value);
   let guessNumber = Number(sessionStorage.getItem("guessNumber"))
   let guestId = sessionStorage.getItem("guestId");
-  const playerturnguest = ref(DB, "games/GTN/activegames/playturn" + guestId)
+  const playerturnguest = ref(DB, "games/GTN/activegames/playturn/" + guestId)
   console.log(guestId)
   //checking if the guess is valid
   if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
