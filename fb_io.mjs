@@ -719,7 +719,7 @@ function writtenumberhost() {
   const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed" + userId);
   const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
   var guess = Number(document.getElementById("guess").value);
-  let guessNumber = sessionStorage.getItem("guessNumber")
+  let guessNumber = Number(sessionStorage.getItem("guessNumber"))
   let guestId = sessionStorage.getItem("guestId");
   const playerturnguest = ref(DB, "games/GTN/activegames/playturn" + guestId)
   console.log(guestId)
