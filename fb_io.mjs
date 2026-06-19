@@ -525,6 +525,7 @@ function fb_GuessTheNumberGame(hostId) {
 
   get(guessingnumber).then((snapshot) => {
     var guessNumber = snapshot.val();
+    sessionStorage.setItem("guessNumber", guessNumber);
 
     console.log(guessingnumber)
     console.log(snapshot.val())
@@ -635,12 +636,15 @@ function fb_generaterandomnumber() {
   const AUTH = getAuth();
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/number/" + userId);
+  //generates a number between 1 and 100
   const guessNumber = Math.ceil(Math.random() * 100);
   //generates number between 1 and 100
   console.log(guessNumber)
+  //puts the randomly generated number to the hosts sessionstorage
+  sessionStorage.setItem("guessNumber", guessNumber);
+  //updates the database with the new generated number
   update(dbReference, { Number: guessNumber }).then(() => {
     console.log("Successfully sent number")
-    //updates the database with the new generated number
     GTNgamestart(guessNumber);
   })
 };
@@ -651,9 +655,13 @@ function writtenumberguest() {
   const DB = getDatabase();
   const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed" + userId);
   const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
-  var guess = document.getElementById("guess").value;
+  //takes the guess from what the user submitted and turns it from a string to a number and defines it as a variable
+  var guess = Number(document.getElementById("guess").value);
   var playerguestguess;
+  //takes hostId from sessionStorage to be used in this function
   let hostId = sessionStorage.getItem("hostId");
+  //takes the randomly generated number from sessionStorage to be used in this function
+  let guessNumber = Number(sessionStorage.getItem("guessNumber"));
   console.log(hostId)
   const playerturnhost = ref(DB, "games/GTN/activegames/playerturn" + hostId)
 
@@ -674,9 +682,27 @@ function writtenumberguest() {
       //❌ Code for a write error goes here
       console.log("Writing error")
     })
+
+    //if the user guesses the correct number they win
+  if (guess == guessNumber) {
+
+   console.log("Congrats! You win")
+   console.log("guessnumber " + guessNumber)
+ }
+ //if the user guesses too high they are told so
+  else if (guess > guessNumber) {
+    console.log("Too high")
+    console.log("guessnumber " + guessNumber)
+  }
+//if the user guesses too low they are told so
+  else if (guess < guessNumber) {
+    console.log("Too low")
+    console.log("guessnumber " + guessNumber)
+  }
+
     //sets Playerturn to false
     update(playerturn, { Playerturn: false }).then(() => {
-      console.log("successfully set playerturn to false")
+      console.log("successfully set playerturn to e")
     })
     //sets the hosts Playerturn to true
     update(playerturnhost, { Playerturn: true }).then(() => {
@@ -686,30 +712,16 @@ function writtenumberguest() {
 
  
 
-  if (guess == guessNumber) {
-    console.log("Correct!");
-    }
-
-  if (playerguestguess == guessNumber) {
-
-   console.log("Congrats! You win")
- }
-
-  else if (playerguestguess > guessNumber) {
-    console.log("Too high")
-  }
-
-  else if (playerguestguess < guessNumber) {
-    console.log("Too low")
-  }
 }
 
 function writtenumberhost() {
   const DB = getDatabase();
   const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed" + userId);
   const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
-  var guess = document.getElementById("guess").value;
+  var guess = Number(document.getElementById("guess").value);
+  let guessNumber = sessionStorage.getItem("guessNumber")
   let guestId = sessionStorage.getItem("guestId");
+  const playerturnguest = ref(DB, "games/GTN/activegames/playturn" + guestId)
   console.log(guestId)
   //checking if the guess is valid
   if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
@@ -731,7 +743,36 @@ function writtenumberhost() {
     update(playerturn, { Playerturn: false }).then(() => {
       console.log("successfully set playerturn to false")
     })
+
+     //if the user guesses the correct number they win
+  if (guess == guessNumber) {
+
+   console.log("Congrats! You win")
+   console.log("guessnumber " + guessNumber)
+ }
+ //if the user guesses too high they are told so
+  else if (guess > guessNumber) {
+    console.log("Too high")
+    console.log("guessnumber " + guessNumber)
   }
+//if the user guesses too low they are told so
+  else if (guess < guessNumber) {
+    console.log("Too low")
+    console.log("guessnumber " + guessNumber)
+  }
+
+    //sets Playerturn to false
+    update(playerturn, { Playerturn: false }).then(() => {
+      console.log("successfully set playerturn to false")
+    })
+    //sets the hosts Playerturn to true
+    update(playerturnguest, { Playerturn: true }).then(() => {
+      console.log("successfully set playerturnhost to true")
+    })
+  }
+
+
+
 }
 
 function fb_guestorhost() {
