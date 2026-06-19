@@ -823,7 +823,7 @@ if (hostData != null && hostData.Playerturn == false) {
 update(userTurn, {Playerturn: true});
 console.log("it is now your turn")
 }
-})
+})}
 }
 /**************************************************************/
 // END OF CODE
