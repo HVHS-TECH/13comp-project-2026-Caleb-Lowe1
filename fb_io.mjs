@@ -513,7 +513,12 @@ function fb_GuessTheNumberGame(player) {
   const dbReference = ref(DB, "games/GTN/activegames/" + player);
   const guestref = ref(DB, "games/GTN/activegames/" + userId);
   const guessingnumber = ref(DB, "games/GTN/activegames/number/" + player + "/Number")
+  const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
 
+
+  update(playerturn, { Playerturn: false }).then(() => {
+      console.log("successfully set playerturn to false")
+    })
 
 
   get(guessingnumber).then((snapshot) => {
@@ -548,6 +553,13 @@ function fb_sendplayertogame() {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
   const host = ref(DB, "games/GTN/activegames/" + userId + "/host")
+   const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
+
+
+  update(playerturn, { Playerturn: true }).then(() => {
+      console.log("successfully set playerturn to true")
+    })
+
   onValue(dbReference, (snapshot) => {
     var playerstatus = snapshot.val();
     //if the game is full then it will send the user who filled the game to gameGTN
@@ -647,8 +659,9 @@ function playerturnhost() {
 }
 
 
-function playerturnguest() {
+function playerturnguest(player) {
   var playerguestguess;
+  console.log(player)
   const DB = getDatabase();
   const numberRef = (DB, "games/GTN/activegames/number/" + hostId + "/Number");
   get(numberRef).then((snapshot) => {
@@ -673,7 +686,60 @@ function playerturnguest() {
 
 }
 
-function writenumber() {
+function writenumberguest(player) {
+  const DB = getDatabase();
+  const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed" + userId);
+  const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
+  var guess = document.getElementById("guess").value;
+  var playerguestguess;
+  var hostId = player;
+  console.log(player)
+  const numberRef = (DB, "games/GTN/activegames/number/" + hostId + "/Number");
+  
+  //checking if the guess is valid
+  if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
+  else {
+    //sends the players guess to the database
+    update(writingthenumber, { Playerguess: guess }).then(() => {
+
+      //✅ Code for a successful write goes here
+      console.log("successful write")
+      console.log(guess)
+
+
+    }).catch((error) => {
+
+      //❌ Code for a write error goes here
+      console.log("Writing error")
+    })
+    //sets Playerturn to false
+    update(playerturn, { Playerturn: false }).then(() => {
+      console.log("successfully set playerturn to false")
+    })
+  }
+
+  get(numberRef).then((snapshot) => {
+    const guessNumber = snapshot.val();
+
+    if (guess === guessNumber) {
+      console.log("Correct!");
+    }
+  });
+  if (playerguestguess == guessNumber) {
+
+    console.log("Congrats! You win")
+  }
+
+  else if (playerguestguess > guessNumber) {
+    console.log("Too high")
+  }
+
+  else if (playerguestguess < guessNumber) {
+    console.log("Too low")
+  }
+}
+
+function writenumberhost() {
   const DB = getDatabase();
   const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed" + userId);
   const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
@@ -710,14 +776,17 @@ get(hoststatus).then((snapshot) => {
     //this happens if the user is the host
     if (isuserhost["isHost"] == true) {
       console.log("you are the host")
+      writenumberhost();
     }
     //this happens if the user is the host
     else if (isuserhost["isHost"] == false) {
       console.log("you are the guest")
+      writenumberguest();
     }
     //if there is an issue and isHost is null 
     else if (isuserhost["isHost"] == null)
     {console.log("error, cannot determine if you are host or guest")}
+ 
   });
 }
 /**************************************************************/
