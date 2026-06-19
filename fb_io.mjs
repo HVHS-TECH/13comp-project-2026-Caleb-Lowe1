@@ -507,14 +507,16 @@ function fb_readListener() {
   })
 }
 
-function fb_GuessTheNumberGame(player) {
+function fb_GuessTheNumberGame(hostId) {
   const DB = getDatabase();
   const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus")
-  const dbReference = ref(DB, "games/GTN/activegames/" + player);
+  const dbReference = ref(DB, "games/GTN/activegames/" + hostId);
   const guestref = ref(DB, "games/GTN/activegames/" + userId);
-  const guessingnumber = ref(DB, "games/GTN/activegames/number/" + player + "/Number")
+  const guessingnumber = ref(DB, "games/GTN/activegames/number/" + hostId + "/Number")
   const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
-
+  var guestId = userId;
+  sessionStorage.setItem("hostId", hostId);
+  
 
   update(playerturn, { Playerturn: false }).then(() => {
       console.log("successfully set playerturn to false")
@@ -526,13 +528,13 @@ function fb_GuessTheNumberGame(player) {
 
     console.log(guessingnumber)
     console.log(snapshot.val())
-    console.log(player)
+    console.log(hostId)
     console.log("testguessingnumber")
   })
   update(dbReference, { guestId: userId }).then(() => {
     console.log("hello")
   })
-  update(guestref, { hostId: player }).then(() => {
+  update(guestref, { hostId: hostId }).then(() => {
     console.log("Successfully sent hostId")
     //sends the hosts UID to the guest
   })
@@ -554,6 +556,7 @@ function fb_sendplayertogame() {
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
   const host = ref(DB, "games/GTN/activegames/" + userId + "/host")
    const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
+   const getguestId = ref(DB, "games/GTN/activegames/" + userId + "/guestId");
 
 
   update(playerturn, { Playerturn: true }).then(() => {
@@ -568,9 +571,17 @@ function fb_sendplayertogame() {
       fb_generaterandomnumber()
       update(host, { hostId: userId })
 
+      
     }
 
   })
+//gets the guestId from the database then puts it into sessionStorage
+onValue(getguestId, (snapshot) => {
+    var guestId = snapshot.val();
+    sessionStorage.setItem("guestId", guestId);
+
+  })
+
 }
 
 
@@ -633,68 +644,19 @@ function fb_generaterandomnumber() {
     GTNgamestart(guessNumber);
   })
 };
-function playerturnhost() {
-  var playerhostguess;
-  const DB = getDatabase();
-  const numberRef =
-    ref(DB, "games/GTN/activegames/number/" + userId + "/Number");
-  get(numberRef).then((snapshot) => {
-    const guessNumber = snapshot.val();
-
-    if (guess === guessNumber) {
-      console.log("Correct!");
-    }
-  });
-  if (playerhostguess == guessNumber) {
-
-    console.log("Congrats! You win")
-  }
-  else if (playerhostguess > guessNumber) {
-    console.log("Guess is too high")
-  }
-  else if (playerhostguess < guessNumber) {
-    console.log("Guess is too low")
-  }
-
-}
 
 
-function playerturnguest(player) {
-  var playerguestguess;
-  console.log(player)
-  const DB = getDatabase();
-  const numberRef = (DB, "games/GTN/activegames/number/" + hostId + "/Number");
-  get(numberRef).then((snapshot) => {
-    const guessNumber = snapshot.val();
 
-    if (guess === guessNumber) {
-      console.log("Correct!");
-    }
-  });
-  if (playerguestguess == guessNumber) {
-
-    console.log("Congrats! You win")
-  }
-
-  else if (playerguestguess > guessNumber) {
-    console.log("Too high")
-  }
-
-  else if (playerguestguess < guessNumber) {
-    console.log("Too low")
-  }
-
-}
-
-function writenumberguest(player) {
+function writtenumberguest() {
   const DB = getDatabase();
   const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed" + userId);
   const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
   var guess = document.getElementById("guess").value;
   var playerguestguess;
-  var hostId = player;
-  console.log(player)
-  const numberRef = (DB, "games/GTN/activegames/number/" + hostId + "/Number");
+  let hostId = sessionStorage.getItem("hostId");
+  console.log(hostId)
+  const playerturnhost = ref(DB, "games/GTN/activegames/playerturn" + hostId)
+
   
   //checking if the guess is valid
   if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
@@ -716,19 +678,22 @@ function writenumberguest(player) {
     update(playerturn, { Playerturn: false }).then(() => {
       console.log("successfully set playerturn to false")
     })
+    //sets the hosts Playerturn to true
+    update(playerturnhost, { Playerturn: true }).then(() => {
+      console.log("successfully set playerturnhost to true")
+    })
   }
 
-  get(numberRef).then((snapshot) => {
-    const guessNumber = snapshot.val();
+ 
 
-    if (guess === guessNumber) {
-      console.log("Correct!");
+  if (guess == guessNumber) {
+    console.log("Correct!");
     }
-  });
+
   if (playerguestguess == guessNumber) {
 
-    console.log("Congrats! You win")
-  }
+   console.log("Congrats! You win")
+ }
 
   else if (playerguestguess > guessNumber) {
     console.log("Too high")
@@ -739,11 +704,13 @@ function writenumberguest(player) {
   }
 }
 
-function writenumberhost() {
+function writtenumberhost() {
   const DB = getDatabase();
   const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed" + userId);
   const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
   var guess = document.getElementById("guess").value;
+  let guestId = sessionStorage.getItem("guestId");
+  console.log(guestId)
   //checking if the guess is valid
   if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
   else {
@@ -776,12 +743,12 @@ get(hoststatus).then((snapshot) => {
     //this happens if the user is the host
     if (isuserhost["isHost"] == true) {
       console.log("you are the host")
-      writenumberhost();
+      writtenumberhost();
     }
     //this happens if the user is the host
     else if (isuserhost["isHost"] == false) {
       console.log("you are the guest")
-      writenumberguest();
+      writtenumberguest();
     }
     //if there is an issue and isHost is null 
     else if (isuserhost["isHost"] == null)
