@@ -775,18 +775,55 @@ get(hoststatus).then((snapshot) => {
     //this happens if the user is the host
     if (isuserhost["isHost"] == true) {
       console.log("you are the host")
-      writtenumberhost();
+      writtenumberhost()
+      hostlisteningforguest();
     }
     //this happens if the user is the host
     else if (isuserhost["isHost"] == false) {
       console.log("you are the guest")
-      writtenumberguest();
+      writtenumberguest()
+      guestlisteningforhost();
+      
     }
     //if there is an issue and isHost is null 
     else if (isuserhost["isHost"] == null)
     {console.log("error, cannot determine if you are host or guest")}
  
   });
+}
+
+function hostlisteningforguest() {
+const DB = getDatabase();
+let guestId = sessionStorage.getItem("guestId");
+const guestTurn = ref(DB, "games/GTN/activegames/playerturn/" + guestId)
+const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
+
+if (!guestId) {return;}
+
+onValue(guestTurn, (snapshot) => {
+const guestData = snapshot.val();
+if (guestData != null && guestData.Playerturn == false) {
+update(userTurn, {Playerturn: true});
+console.log("it is now your turn")
+}
+})
+}
+
+function guestlisteningforhost() {
+const DB = getDatabase();
+let hostId = sessionStorage.getItem("hostId");
+const hostTurn = ref(DB, "games/GTN/activegames/playerturn/" + hostId)
+const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
+
+if (!hostId) {return;}
+
+onValue(hostTurn, (snapshot) => {
+const hostData = snapshot.val();
+if (hostData != null && hostData.Playerturn == false) {
+update(userTurn, {Playerturn: true});
+console.log("it is now your turn")
+}
+})
 }
 /**************************************************************/
 // END OF CODE
