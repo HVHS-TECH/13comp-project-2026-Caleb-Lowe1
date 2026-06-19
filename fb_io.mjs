@@ -443,6 +443,7 @@ function fb_createGame() {
   const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus")
   //updates the database
   update(dbReference, { Full: false }).then(() => {
+      update(host, { hostId: userId })
     location.href = "GTNloadingpage.html";
     //shows if it successfully writes
     console.log("written")
@@ -513,7 +514,7 @@ function fb_GuessTheNumberGame(hostId) {
   const dbReference = ref(DB, "games/GTN/activegames/" + hostId);
   const guestref = ref(DB, "games/GTN/activegames/" + userId);
   const guessingnumber = ref(DB, "games/GTN/activegames/number/" + hostId + "/Number")
-  const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
+  const playerturn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
   var guestId = userId;
   sessionStorage.setItem("hostId", hostId);
   
@@ -556,7 +557,7 @@ function fb_sendplayertogame() {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
   const host = ref(DB, "games/GTN/activegames/" + userId + "/host")
-   const playerturn = ref(DB, "games/GTN/activegames/playerturn" + userId)
+   const playerturn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
    const getguestId = ref(DB, "games/GTN/activegames/" + userId + "/guestId");
 
 
@@ -569,7 +570,6 @@ function fb_sendplayertogame() {
     //if the game is full then it will send the user who filled the game to gameGTN
     if (playerstatus["Full"] == true) {
       location.href = "GTNgame.html"
-      fb_generaterandomnumber()
       update(host, { hostId: userId })
 
       
