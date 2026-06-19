@@ -442,8 +442,10 @@ function fb_createGame() {
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
   const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus")
   //updates the database
+  fb_generaterandomnumber();
+   sessionStorage.getItem("hostId");
   update(dbReference, { Full: false }).then(() => {
-      update(host, { hostId: userId })
+      update(hoststatus, { hostId: userId })
     location.href = "GTNloadingpage.html";
     //shows if it successfully writes
     console.log("written")
@@ -628,9 +630,7 @@ function fb_detectloginchangenumber() {
 };
 
 
-function GTNgamestart() {
-  playerturnhost();
-}
+
 
 function fb_generaterandomnumber() {
   const AUTH = getAuth();
@@ -645,7 +645,7 @@ function fb_generaterandomnumber() {
   //updates the database with the new generated number
   update(dbReference, { Number: guessNumber }).then(() => {
     console.log("Successfully sent number")
-    GTNgamestart(guessNumber);
+    
   })
 };
 
@@ -704,11 +704,7 @@ function writtenumberguest() {
     update(playerturn, { Playerturn: false }).then(() => {
       console.log("successfully set playerturn to false")
     })
-    //sets the hosts Playerturn to true
-    update(playerturnhost, { Playerturn: true }).then(() => {
-      console.log("successfully set playerturnhost to true")
-    })
-  }
+
 
  
 
@@ -721,7 +717,6 @@ function writtenumberhost() {
   var guess = Number(document.getElementById("guess").value);
   let guessNumber = Number(sessionStorage.getItem("guessNumber"))
   let guestId = sessionStorage.getItem("guestId");
-  const playerturnguest = ref(DB, "games/GTN/activegames/playturn/" + guestId)
   console.log(guestId)
   //checking if the guess is valid
   if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
@@ -764,10 +759,6 @@ function writtenumberhost() {
     //sets Playerturn to false
     update(playerturn, { Playerturn: false }).then(() => {
       console.log("successfully set playerturn to false")
-    })
-    //sets the hosts Playerturn to true
-    update(playerturnguest, { Playerturn: true }).then(() => {
-      console.log("successfully set playerturnguest to true")
     })
   }
 
