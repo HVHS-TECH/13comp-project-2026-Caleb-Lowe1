@@ -77,6 +77,8 @@ export {
   fb_generaterandomnumber,
   fb_detectloginchangenumber,
   fb_guestorhost
+
+  
   
 
 };
@@ -708,7 +710,7 @@ function writtenumberguest() {
 
  
 
-}
+}}
 
 function writtenumberhost() {
   const DB = getDatabase();
@@ -823,7 +825,7 @@ if (hostData != null && hostData.Playerturn == false) {
 update(userTurn, {Playerturn: true});
 console.log("it is now your turn")
 }
-})}
+})
 }
 /**************************************************************/
 // END OF CODE
