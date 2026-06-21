@@ -657,7 +657,6 @@ function fb_generaterandomnumber() {
 function writtenumberguest() {
   const DB = getDatabase();
   const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed/" + userId);
-  const playerturn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
   //takes the guess from what the user submitted and turns it from a string to a number and defines it as a variable
   var guess = Number(document.getElementById("guess").value);
   var playerguestguess;
