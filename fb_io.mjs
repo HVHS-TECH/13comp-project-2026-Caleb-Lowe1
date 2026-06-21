@@ -659,6 +659,7 @@ function writtenumberguest() {
   const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed/" + userId);
   //takes the guess from what the user submitted and turns it from a string to a number and defines it as a variable
   var guess = Number(document.getElementById("guess").value);
+  const playerturn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
   var playerguestguess;
   //takes hostId from sessionStorage to be used in this function
   let hostId = sessionStorage.getItem("hostId");
