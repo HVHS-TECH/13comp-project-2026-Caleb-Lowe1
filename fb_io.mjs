@@ -76,7 +76,8 @@ export {
   fb_sortedreadcoin,
   fb_generaterandomnumber,
   fb_detectloginchangenumber,
-  fb_guestorhost
+  fb_guestorhost,
+  isplayerturn
 
   
   
@@ -662,6 +663,7 @@ function writtenumberguest() {
   var playerguestguess;
   //takes hostId from sessionStorage to be used in this function
   let hostId = sessionStorage.getItem("hostId");
+  const playerturnguest = ref(DB, "games/GTN/activegames/playerturn/" + guestId)
   //takes the randomly generated number from sessionStorage to be used in this function
   let guessNumber = Number(sessionStorage.getItem("guessNumber"));
   console.log(hostId)
@@ -702,9 +704,10 @@ function writtenumberguest() {
     console.log("guessnumber " + guessNumber)
   }
 
-    //sets Playerturn to false
+    //sets Playerturn to false, sets the hosts turn to true
     update(playerturn, { Playerturn: false }).then(() => {
       console.log("successfully set playerturn to false")
+      update(playerturnhost, {Playerturn: true})
     })
 
 
@@ -716,9 +719,11 @@ function writtenumberhost() {
   const DB = getDatabase();
   const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed/" + userId);
   const playerturn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
+  
   var guess = Number(document.getElementById("guess").value);
   let guessNumber = Number(sessionStorage.getItem("guessNumber"))
   let guestId = sessionStorage.getItem("guestId");
+  const playerturnguest = ref(DB, "games/GTN/activegames/playerturn/" + guestId)
   console.log(guestId)
   //checking if the guess is valid
   if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
@@ -736,9 +741,10 @@ function writtenumberhost() {
       //❌ Code for a write error goes here
       console.log("Writing error")
     })
-    //sets Playerturn to false
+    //sets Playerturn to false, sets guests turn to true
     update(playerturn, { Playerturn: false }).then(() => {
       console.log("successfully set playerturn to false")
+      update(playerturnguest, {Playerturn: true})
     })
 
      //if the user guesses the correct number they win
@@ -774,22 +780,22 @@ const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus/");
 get(hoststatus).then((snapshot) => {
     const isuserhost = snapshot.val();
     console.log(isuserhost)
-    //this happens if the user is the host
+    //if the user is the host then it runs the functions writtennumberhost and hostlisteningforguest
     if (isuserhost["isHost"] == true) {
       console.log("you are the host")
       writtenumberhost()
       hostlisteningforguest();
     }
-    //this happens if the user is the host
+    //if the user is the host then it runs the required functions
     else if (isuserhost["isHost"] == false) {
       console.log("you are the guest")
       writtenumberguest()
       guestlisteningforhost();
       
     }
-    //if there is an issue and isHost is null 
+    //if there is an issue and isHost is null then an alert will appear
     else if (isuserhost["isHost"] == null)
-    {console.log("error, cannot determine if you are host or guest")}
+    {alert("error, cannot determine if you are host or guest")}
  
   });
 }
@@ -801,7 +807,7 @@ const guestTurn = ref(DB, "games/GTN/activegames/playerturn/" + guestId)
 const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
 
 if (!guestId) {return;}
-
+//waits until it is no longer the guests turn then sets the users turn to true.
 onValue(guestTurn, (snapshot) => {
 const guestData = snapshot.val();
 if (guestData != null && guestData.Playerturn == false) {
@@ -818,12 +824,26 @@ const hostTurn = ref(DB, "games/GTN/activegames/playerturn/" + hostId)
 const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
 
 if (!hostId) {return;}
-
+//waits until it is no longer the hosts turn then sets the users turn to true.
 onValue(hostTurn, (snapshot) => {
 const hostData = snapshot.val();
 if (hostData != null && hostData.Playerturn == false) {
 update(userTurn, {Playerturn: true});
 console.log("it is now your turn")
+}
+})
+}
+
+function isplayerturn() {
+const DB = getDatabase();
+const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
+//getting information from the database that says if it is the players turn or not
+get (userTurn).then((snapshot) => {
+const isuserturn = snapshot.val();
+console.log(isuserturn);
+//if it is the players turn then the function fb_guestorhost is run if not then an alert appears telling the user to wait.
+if (isuserturn["Playerturn"] == true) {console.log(isuserturn); fb_guestorhost();}
+else {alert("It is not your turn, please wait for your opponent to go."); 
 }
 })
 }

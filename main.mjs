@@ -92,6 +92,11 @@ import { fb_guestorhost }
     from './fb_io.mjs';
 window.fb_guestorhost = fb_guestorhost;
 
+import { isplayerturn }
+    from './fb_io.mjs';
+window.isplayerturn = isplayerturn;
+
+
 /**************************************************************/
 // index.html main code
 /**************************************************************/
