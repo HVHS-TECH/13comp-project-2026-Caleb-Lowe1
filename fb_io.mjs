@@ -706,7 +706,6 @@ function writtenumberguest() {
     //sets Playerturn to false, sets the hosts turn to true
     update(playerturn, { Playerturn: false }).then(() => {
       console.log("successfully set playerturn to false")
-      document.getElementById("submit button").innerHTML = null;
       update(playerturnhost, {Playerturn: true})
     })
 
@@ -767,7 +766,6 @@ function writtenumberhost() {
     //sets Playerturn to false
     update(playerturn, { Playerturn: false }).then(() => {
       console.log("successfully set playerturn to false")
-      document.getElementById("submit button").innerHTML = null;
     })
   }
 
@@ -813,7 +811,6 @@ onValue(guestTurn, (snapshot) => {
 const guestData = snapshot.val();
 if (guestData != null && guestData.Playerturn == false) {
 update(userTurn, {Playerturn: true});
-document.getElementById("submit button").innerHTML = '<button onclick="isplayerturn()">Submit</button>'
 console.log("it is now your turn")
 }
 })
@@ -832,7 +829,6 @@ const hostData = snapshot.val();
 if (hostData != null && hostData.Playerturn == false) {
 update(userTurn, {Playerturn: true});
 console.log("it is now your turn")
-document.getElementById("submit button").innerHTML = '<button onclick="isplayerturn()">Submit</button>'
 }
 })
 }
