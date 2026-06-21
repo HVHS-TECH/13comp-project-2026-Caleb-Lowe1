@@ -77,7 +77,8 @@ export {
   fb_generaterandomnumber,
   fb_detectloginchangenumber,
   fb_guestorhost,
-  isplayerturn
+  isplayerturn,
+  gamestarttriggerlisteners
 
   
   
@@ -654,7 +655,7 @@ function fb_generaterandomnumber() {
 
 
 
-function writtenumberguest() {
+function writtennumberguest() {
   const DB = getDatabase();
   const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed/" + userId);
   //takes the guess from what the user submitted and turns it from a string to a number and defines it as a variable
@@ -714,7 +715,7 @@ function writtenumberguest() {
 
 }}
 
-function writtenumberhost() {
+function writtennumberhost() {
   const DB = getDatabase();
   const writingthenumber = ref(DB, "games/GTN/activegames/numberguessed/" + userId);
   const playerturn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
@@ -779,17 +780,15 @@ const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus/");
 get(hoststatus).then((snapshot) => {
     const isuserhost = snapshot.val();
     console.log(isuserhost)
-    //if the user is the host then it runs the functions writtennumberhost and hostlisteningforguest
+    //if the user is the host then it runs the functions writtennumberhost
     if (isuserhost["isHost"] == true) {
       console.log("you are the host")
-      writtenumberhost()
-      hostlisteningforguest();
+      writtennumberhost();
     }
     //if the user is the host then it runs the required functions
     else if (isuserhost["isHost"] == false) {
       console.log("you are the guest")
-      writtenumberguest()
-      guestlisteningforhost();
+      writtennumberguest();
       
     }
     //if there is an issue and isHost is null then an alert will appear
@@ -843,6 +842,25 @@ console.log(isuserturn);
 //if it is the players turn then the function fb_guestorhost is run if not then an alert appears telling the user to wait.
 if (isuserturn["Playerturn"] == true) {console.log(isuserturn); fb_guestorhost();}
 else {alert("It is not your turn, please wait for your opponent to go."); 
+}
+})
+}
+
+function gamestarttriggerlisteners() {
+const DB = getDatabase();
+const ishost = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus")
+get (ishost).then((snapshot) => {
+const isuserhost = snapshot.val();
+console.log(isuserhost);
+
+if(isuserhost["isHost"] == true) {
+console.log("you are host")
+hostlisteningforguest();
+} 
+
+else if (isuserhost["isHost"] == false) {
+console.log("you aren't host")
+guestlisteningforhost();
 }
 })
 }

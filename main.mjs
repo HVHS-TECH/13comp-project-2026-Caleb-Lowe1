@@ -96,6 +96,9 @@ import { isplayerturn }
     from './fb_io.mjs';
 window.isplayerturn = isplayerturn;
 
+import { gamestarttriggerlisteners }
+    from './fb_io.mjs';
+window.gamestarttriggerlistenersn = gamestarttriggerlisteners;
 
 /**************************************************************/
 // index.html main code
