@@ -662,7 +662,6 @@ function writtenumberguest() {
   var playerguestguess;
   //takes hostId from sessionStorage to be used in this function
   let hostId = sessionStorage.getItem("hostId");
-  const playerturnguest = ref(DB, "games/GTN/activegames/playerturn/" + guestId)
   //takes the randomly generated number from sessionStorage to be used in this function
   let guessNumber = Number(sessionStorage.getItem("guessNumber"));
   console.log(hostId)
