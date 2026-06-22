@@ -808,6 +808,10 @@ const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
 onValue(userTurn, (snapshot) => {
 const userData = snapshot.val();
 if (userData != null && userData.Playerturn == true) {
+isitplayerturn.innerHTML = "it is your turn"
+}
+else if (userData != null && userData.Playerturn == false){
+isitplayerturn.innerHTML = "it is not yet your turn"
 }
 })
 }
