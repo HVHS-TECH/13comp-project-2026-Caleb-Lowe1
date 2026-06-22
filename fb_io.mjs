@@ -622,6 +622,7 @@ function fb_detectloginchangenumber() {
     if (user) {
       currentUser = user;
       userId = user.uid;
+      userlisteningforturn();
       console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
     } else {
       console.log("⚠️ Not logged in — redirecting to registration.html");
@@ -798,36 +799,15 @@ get(hoststatus).then((snapshot) => {
   });
 }
 
-function hostlisteningforguest() {
+
+function userlisteningforturn() {
 const DB = getDatabase();
-let guestId = sessionStorage.getItem("guestId");
-const guestTurn = ref(DB, "games/GTN/activegames/playerturn/" + guestId)
 const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
 
-if (!guestId) {return;}
-//waits until it is no longer the guests turn then sets the users turn to true.
-onValue(guestTurn, (snapshot) => {
-const guestData = snapshot.val();
-if (guestData != null && guestData.Playerturn == false) {
-update(userTurn, {Playerturn: true});
-console.log("it is now your turn")
-}
-})
-}
-
-function guestlisteningforhost() {
-const DB = getDatabase();
-let hostId = sessionStorage.getItem("hostId");
-const hostTurn = ref(DB, "games/GTN/activegames/playerturn/" + hostId)
-const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
-
-if (!hostId) {return;}
 //waits until it is no longer the hosts turn then sets the users turn to true.
-onValue(hostTurn, (snapshot) => {
-const hostData = snapshot.val();
-if (hostData != null && hostData.Playerturn == false) {
-update(userTurn, {Playerturn: true});
-console.log("it is now your turn")
+onValue(userTurn, (snapshot) => {
+const userData = snapshot.val();
+if (userData != null && userData.Playerturn == true) {
 }
 })
 }
@@ -853,15 +833,7 @@ get (ishost).then((snapshot) => {
 const isuserhost = snapshot.val();
 console.log(isuserhost);
 
-if(isuserhost["isHost"] == true) {
-console.log("you are host")
-hostlisteningforguest();
-} 
-
-else if (isuserhost["isHost"] == false) {
-console.log("you aren't host")
-guestlisteningforhost();
-}
+//here will be the code for the winner listener
 })
 }
 /**************************************************************/
