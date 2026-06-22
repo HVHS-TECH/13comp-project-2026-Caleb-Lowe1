@@ -698,11 +698,13 @@ function writtennumberguest() {
   else if (guess > guessNumber) {
     console.log("Too high")
     console.log("guessnumber " + guessNumber)
+    playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too high"
   }
 //if the user guesses too low they are told so
   else if (guess < guessNumber) {
     console.log("Too low")
-    console.log("guessnumber " + guessNumber)
+    console.log("guessnumber " + guess)
+    playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too low"
   }
 
     //sets Playerturn to false, sets the hosts turn to true
@@ -753,16 +755,19 @@ function writtennumberhost() {
 
    console.log("Congrats! You win")
    console.log("guessnumber " + guessNumber)
+   
  }
  //if the user guesses too high they are told so
   else if (guess > guessNumber) {
     console.log("Too high")
     console.log("guessnumber " + guessNumber)
+    playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too high"
   }
 //if the user guesses too low they are told so
   else if (guess < guessNumber) {
     console.log("Too low")
     console.log("guessnumber " + guessNumber)
+    playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too low"
   }
 
     //sets Playerturn to false
@@ -808,10 +813,10 @@ const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
 onValue(userTurn, (snapshot) => {
 const userData = snapshot.val();
 if (userData != null && userData.Playerturn == true) {
-isitplayerturn.innerHTML = "it is your turn"
+isitplayerturn.innerHTML = "It is your turn."
 }
 else if (userData != null && userData.Playerturn == false){
-isitplayerturn.innerHTML = "it is not yet your turn"
+isitplayerturn.innerHTML = "It is not yet your turn, please wait for your opponent to make their guess."
 }
 })
 }
@@ -839,6 +844,10 @@ console.log(isuserhost);
 
 //here will be the code for the winner listener
 })
+}
+
+function winnerlistener() {
+
 }
 /**************************************************************/
 // END OF CODE
