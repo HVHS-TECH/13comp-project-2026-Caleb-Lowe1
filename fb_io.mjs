@@ -623,6 +623,7 @@ function fb_detectloginchangenumber() {
       currentUser = user;
       userId = user.uid;
       userlisteningforturn();
+      gamestarttriggerlisteners();
       console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL, user.providerData);
     } else {
       console.log("⚠️ Not logged in — redirecting to registration.html");
@@ -842,13 +843,47 @@ get (ishost).then((snapshot) => {
 const isuserhost = snapshot.val();
 console.log(isuserhost);
 
-//here will be the code for the winner listener
+
+//if the user is the host then it runs the functions writtennumberhost
+    if (isuserhost["isHost"] == true) {
+      console.log("you are the host")
+      winnerlistenerhost();
+    }
+    //if the user is the host then it runs the required functions
+    else if (isuserhost["isHost"] == false) {
+      console.log("you are the guest")
+      winnerlistenerhost();
+      
+    }
+
 })
 }
 
-function winnerlistener() {
+function winnerlistenerguest() {
+const DB = getDatabase();
+let hostId = sessionStorage.getItem("hostId");
+const hostguess = ref(DB, "games/GTN/activegames/numberguessed/" + hostId)
+const userguess = ref(DB, "games/GTN/activegames/numberguessed" + userId)
+
+
+//temporary just to check that they work
+console.log("winnerlistenerguest is running")
+
 
 }
+
+
+function winnerlistenerhost() {
+const DB = getDatabase();
+let guestId = sessionStorage.getItem("guestId");
+const guestguess = ref(DB, "games/GTN/activegames/numberguessed/" + guestId)
+const userguess = ref(DB, "games/GTN/activegames/numberguessed" + userId)
+//temporary just to check that they work
+console.log("winnerlistenerhost is running")
+
+
+}
+
 /**************************************************************/
 // END OF CODE
 /**************************************************************/
