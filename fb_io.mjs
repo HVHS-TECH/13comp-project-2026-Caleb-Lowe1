@@ -1,4 +1,4 @@
-//Almost all code here taken straight from year 12 assesment
+//Some code here taken straight from year 12 assesment
 
 //**************************************************************/
 // fb_io.mjs
