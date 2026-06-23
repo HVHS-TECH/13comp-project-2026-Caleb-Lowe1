@@ -908,6 +908,8 @@ const userwin = snapshot.val();
 if (userwin != null && userwin.iswinner == true) {
 alert("You win! The corret number was " + guessNumber)
 location.href = "./GTNlobby.html"
+//setting iswinner to false early for the users next game
+update(userwinner, {iswinner: false}).then(() => {console.log("Successfully reset iswinner to false")})
 }
 
 })
