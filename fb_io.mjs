@@ -887,7 +887,7 @@ onValue (hostwinner, (snapshot) => {
 const hostwin = snapshot.val();
 if (hostwin != null && hostwin.iswinner == true){
 alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
-location.href = ".GTNgame.html"
+location.href = "./GTNgame.html"
 }
 })
 
