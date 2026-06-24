@@ -274,7 +274,9 @@ function fb_WriteRec() {
 
   const dbReference = ref(DB, "Public/" + userId);
 
-  update(dbReference, { Name: name }).then(() => {
+  update(dbReference, { Name: name,
+    totalwins: 0
+   }).then(() => {
 
     //✅ Code for a successful write goes here
     console.log("successful write")
@@ -293,7 +295,7 @@ function fb_WriteRec() {
 
         //✅ Code for a successful write goes here
         console.log("successful write")
-
+      
 
       }).catch((error) => {
 
@@ -900,6 +902,8 @@ let guestId = sessionStorage.getItem("guestId");
 const guestwinner = ref(DB, "games/GTN/activegames/winner/" + guestId)
 const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
 let guessNumber = Number(sessionStorage.getItem("guessNumber"))
+const totalwins = ref(DB, "public/userId/" + guessNumberwins)
+
 //temporary just to check that they work
 console.log("winnerlistenerhost is running")
 
@@ -921,6 +925,8 @@ alert("You lost, your opponent guessed the correct number. The correct number wa
 location.href = "./GTNlobby.html"
 }
 })
+
+
 }
 
 
