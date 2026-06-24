@@ -275,7 +275,7 @@ function fb_WriteRec() {
   const dbReference = ref(DB, "Public/" + userId);
 
   update(dbReference, { Name: name,
-    totalwins: 0
+    guessNumbertotalwins: 0
    }).then(() => {
 
     //✅ Code for a successful write goes here
