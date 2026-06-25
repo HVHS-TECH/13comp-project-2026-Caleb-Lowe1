@@ -879,6 +879,7 @@ get(totalwins).then((snapshot) => {
 const userTotalwins = snapshot.val();
 const usernewTotalwins = userTotalwins + 1;
 set(totalwins, usernewTotalwins).then(() => {console.log("successfully updated wins")})
+update(userwinner, {iswinner: false}).then(() => {console.log("Successfully reset iswinner to false")})
 })
 
 alert("You win! The correct number was " + guessNumber)
