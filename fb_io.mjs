@@ -902,7 +902,7 @@ let guestId = sessionStorage.getItem("guestId");
 const guestwinner = ref(DB, "games/GTN/activegames/winner/" + guestId)
 const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
 let guessNumber = Number(sessionStorage.getItem("guessNumber"))
-const totalwins = ref(DB, "public/userId/" + guessNumberwins)
+const totalwins = ref(DB, "public/userId/")
 
 //temporary just to check that they work
 console.log("winnerlistenerhost is running")
@@ -911,9 +911,16 @@ onValue(userwinner, (snapshot) => {
 const userwin = snapshot.val();
 if (userwin != null && userwin.iswinner == true) {
 alert("You win! The corret number was " + guessNumber)
-location.href = "./GTNlobby.html"
+get(totalwins, (totalwinssnapshot) => {
+const userTotalwins = totalwinssnapshot.val();
+const usernewTotalwins = userTotalwins + 1;
+update(totalwins, {guessNumberwins: usernewTotalwins}).then(() => {console.log("successfully updated wins")})
+})
 //setting iswinner to false early for the users next game
 update(userwinner, {iswinner: false}).then(() => {console.log("Successfully reset iswinner to false")})
+
+location.href = "./GTNlobby.html"
+
 }
 
 })
