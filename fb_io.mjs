@@ -776,10 +776,6 @@ function writtennumberhost() {
     playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too low"
   }
 
-    //sets Playerturn to false
-    update(playerturn, { Playerturn: false }).then(() => {
-      console.log("successfully set playerturn to false")
-    })
   }
 
 
@@ -871,7 +867,7 @@ let hostId = sessionStorage.getItem("hostId");
 const hostwinner = ref(DB, "games/GTN/activegames/winner/" + hostId)
 const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
 let guessNumber = Number(sessionStorage.getItem("guessNumber"))
-const totalwins = ref(DB, "Public/userId")
+const totalwins = ref(DB, "Public/" + userId + "/guessNumbertotalwins")
 //temporary just to check that they work
 console.log("winnerlistenerguest is running")
 
@@ -882,7 +878,7 @@ if (userwin != null && userwin.iswinner == true) {
 get(totalwins).then((snapshot) => {
 const userTotalwins = snapshot.val();
 const usernewTotalwins = userTotalwins + 1;
-set(totalwins, {guessNumberwins: usernewTotalwins}).then(() => {console.log("successfully updated wins")})
+set(totalwins, usernewTotalwins).then(() => {console.log("successfully updated wins")})
 })
 
 alert("You win! The correct number was " + guessNumber)
@@ -908,7 +904,7 @@ let guestId = sessionStorage.getItem("guestId");
 const guestwinner = ref(DB, "games/GTN/activegames/winner/" + guestId)
 const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
 let guessNumber = Number(sessionStorage.getItem("guessNumber"))
-const totalwins = ref(DB, "Public/userId/")
+const totalwins = ref(DB, "Public/" + userId + "/guessNumbertotalwins")
 
 //temporary just to check that they work
 console.log("winnerlistenerhost is running")
@@ -920,7 +916,7 @@ alert("You win! The corret number was " + guessNumber)
 get(totalwins).then((snapshot) => {
 const userTotalwins = snapshot.val();
 const usernewTotalwins = userTotalwins + 1;
-set(totalwins, {guessNumberwins: usernewTotalwins}).then(() => {console.log("successfully updated wins")})
+set(totalwins, usernewTotalwins).then(() => {console.log("successfully updated wins")})
 })
 //setting iswinner to false early for the users next game
 update(userwinner, {iswinner: false}).then(() => {console.log("Successfully reset iswinner to false")})
@@ -928,7 +924,7 @@ update(userwinner, {iswinner: false}).then(() => {console.log("Successfully rese
 location.href = "./GTNlobby.html"
 
 }
-
+})
 onValue (guestwinner, (snapshot) => {
 const guestwin = snapshot.val();
 if (guestwin != null && guestwin.iswinner == true){
@@ -937,7 +933,7 @@ location.href = "./GTNlobby.html"
 }
 })
 
-})
+
 
 
 
