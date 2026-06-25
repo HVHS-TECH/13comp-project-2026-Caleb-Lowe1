@@ -923,6 +923,14 @@ location.href = "./GTNlobby.html"
 
 }
 
+onValue (guestwinner, (snapshot) => {
+const guestwin = snapshot.val();
+if (guestwin != null && guestwin.iswinner == true){
+alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
+location.href = "./GTNgame.html"
+}
+})
+
 })
 
 onValue (guestwinner, (snapshot) => {
