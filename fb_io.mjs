@@ -871,7 +871,7 @@ let hostId = sessionStorage.getItem("hostId");
 const hostwinner = ref(DB, "games/GTN/activegames/winner/" + hostId)
 const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
 let guessNumber = Number(sessionStorage.getItem("guessNumber"))
-
+const totalwins = ref(DB, "Public/userId")
 //temporary just to check that they work
 console.log("winnerlistenerguest is running")
 
@@ -879,8 +879,14 @@ console.log("winnerlistenerguest is running")
 onValue(userwinner, (snapshot) => {
 const userwin = snapshot.val();
 if (userwin != null && userwin.iswinner == true) {
+get(totalwins).then((snapshot) => {
+const userTotalwins = snapshot.val();
+const usernewTotalwins = userTotalwins + 1;
+set(totalwins, {guessNumberwins: usernewTotalwins}).then(() => {console.log("successfully updated wins")})
+})
+
 alert("You win! The correct number was " + guessNumber)
-location.href = "./GTNgame.html"
+location.href = "./GTNlobby.html"
 }
 
 })
@@ -889,7 +895,7 @@ onValue (hostwinner, (snapshot) => {
 const hostwin = snapshot.val();
 if (hostwin != null && hostwin.iswinner == true){
 alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
-location.href = "./GTNgame.html"
+location.href = "./GTNlobby.html"
 }
 })
 
@@ -927,7 +933,7 @@ onValue (guestwinner, (snapshot) => {
 const guestwin = snapshot.val();
 if (guestwin != null && guestwin.iswinner == true){
 alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
-location.href = "./GTNgame.html"
+location.href = "./GTNlobby.html"
 }
 })
 
