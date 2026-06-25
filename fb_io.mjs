@@ -858,7 +858,7 @@ console.log(isuserhost);
     //if the user is the host then it runs the required functions
     else if (isuserhost["isHost"] == false) {
       console.log("you are the guest")
-      winnerlistenerhost();
+      winnerlistenerguest();
       
     }
 
@@ -902,7 +902,7 @@ let guestId = sessionStorage.getItem("guestId");
 const guestwinner = ref(DB, "games/GTN/activegames/winner/" + guestId)
 const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
 let guessNumber = Number(sessionStorage.getItem("guessNumber"))
-const totalwins = ref(DB, "public/userId/")
+const totalwins = ref(DB, "Public/userId/")
 
 //temporary just to check that they work
 console.log("winnerlistenerhost is running")
@@ -911,10 +911,10 @@ onValue(userwinner, (snapshot) => {
 const userwin = snapshot.val();
 if (userwin != null && userwin.iswinner == true) {
 alert("You win! The corret number was " + guessNumber)
-get(totalwins, (totalwinssnapshot) => {
-const userTotalwins = totalwinssnapshot.val();
+get(totalwins).then((snapshot) => {
+const userTotalwins = snapshot.val();
 const usernewTotalwins = userTotalwins + 1;
-update(totalwins, {guessNumberwins: usernewTotalwins}).then(() => {console.log("successfully updated wins")})
+set(totalwins, {guessNumberwins: usernewTotalwins}).then(() => {console.log("successfully updated wins")})
 })
 //setting iswinner to false early for the users next game
 update(userwinner, {iswinner: false}).then(() => {console.log("Successfully reset iswinner to false")})
