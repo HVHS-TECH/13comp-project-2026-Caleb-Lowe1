@@ -80,8 +80,8 @@ export {
   isplayerturn,
   gamestarttriggerlisteners
 
-  
-  
+
+
 
 };
 /******************************************************/
@@ -274,22 +274,23 @@ function fb_WriteRec() {
 
   const dbReference = ref(DB, "Public/" + userId);
   const totalwins = ref(DB, "Public/" + userId + "/guessNumbertotalwins");
-  const totallosses = ref (DB, "Public/" + userId) + "/guessNumbertotallosses"
+  const totallosses = ref(DB, "Public/" + userId) + "/guessNumbertotallosses"
   //if the user doesn't have guessNumbertotalwins in the database then it is added and set to zero
   get(totalwins).then((snapshot) => {
-  if (!snapshot.exists()) {
-  set(totalwins, 0)
-  }
+    if (!snapshot.exists()) {
+      set(totalwins, 0)
+    }
   })
   //if the user doesn't have guessNumbertotallosses in the database then it is added and set to zero
-   get(totallosses).then((snapshot) => {
-  if (!snapshot.exists()) {
-  set(totallosses, 0)
-  }
+  get(totallosses).then((snapshot) => {
+    if (!snapshot.exists()) {
+      set(totallosses, 0)
+    }
   })
-  update(dbReference, { Name: name,
+  update(dbReference, {
+    Name: name,
     guessNumbertotalwins: 0
-   }).then(() => {
+  }).then(() => {
 
     //✅ Code for a successful write goes here
     console.log("successful write")
@@ -308,7 +309,7 @@ function fb_WriteRec() {
 
         //✅ Code for a successful write goes here
         console.log("successful write")
-      
+
 
       }).catch((error) => {
 
@@ -462,9 +463,9 @@ function fb_createGame() {
   const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus")
   //updates the database
   fb_generaterandomnumber();
-   sessionStorage.getItem("hostId");
+  sessionStorage.getItem("hostId");
   update(dbReference, { Full: false }).then(() => {
-      update(hoststatus, { hostId: userId })
+    update(hoststatus, { hostId: userId })
     location.href = "GTNloadingpage.html";
     //shows if it successfully writes
     console.log("written")
@@ -473,9 +474,9 @@ function fb_createGame() {
     console.log("error while trying to create game")
   });
   update(hoststatus, { isHost: true }).then(() => {
-  console.log("User is the host")
+    console.log("User is the host")
   }
-)
+  )
 
 
 }
@@ -538,11 +539,11 @@ function fb_GuessTheNumberGame(hostId) {
   const playerturn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
   var guestId = userId;
   sessionStorage.setItem("hostId", hostId);
-  
+
 
   update(playerturn, { Playerturn: false }).then(() => {
-      console.log("successfully set playerturn to false")
-    })
+    console.log("successfully set playerturn to false")
+  })
 
 
   get(guessingnumber).then((snapshot) => {
@@ -569,22 +570,22 @@ function fb_GuessTheNumberGame(hostId) {
   })
 
   update(hoststatus, { isHost: false }).then(() => {
-  console.log("User is not the host")
+    console.log("User is not the host")
   }
-)
+  )
 }
 
 function fb_sendplayertogame() {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
   const host = ref(DB, "games/GTN/activegames/" + userId + "/host")
-   const playerturn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
-   const getguestId = ref(DB, "games/GTN/activegames/" + userId + "/guestId");
+  const playerturn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
+  const getguestId = ref(DB, "games/GTN/activegames/" + userId + "/guestId");
 
 
   update(playerturn, { Playerturn: true }).then(() => {
-      console.log("successfully set playerturn to true")
-    })
+    console.log("successfully set playerturn to true")
+  })
 
   onValue(dbReference, (snapshot) => {
     var playerstatus = snapshot.val();
@@ -593,12 +594,12 @@ function fb_sendplayertogame() {
       location.href = "GTNgame.html"
       update(host, { hostId: userId })
 
-      
+
     }
 
   })
-//gets the guestId from the database then puts it into sessionStorage
-onValue(getguestId, (snapshot) => {
+  //gets the guestId from the database then puts it into sessionStorage
+  onValue(getguestId, (snapshot) => {
     var guestId = snapshot.val();
     sessionStorage.setItem("guestId", guestId);
 
@@ -632,7 +633,7 @@ function fb_detectloginchangeGTN() {
 function fb_detectloginchangenumber() {
   console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const AUTH = getAuth();
-  
+
 
   onAuthStateChanged(AUTH, (user) => {
     if (user) {
@@ -667,7 +668,7 @@ function fb_generaterandomnumber() {
   //updates the database with the new generated number
   update(dbReference, { Number: guessNumber }).then(() => {
     console.log("Successfully sent number")
-    
+
   })
 };
 
@@ -688,7 +689,7 @@ function writtennumberguest() {
   console.log(hostId)
   const playerturnhost = ref(DB, "games/GTN/activegames/playerturn/" + hostId)
 
-  
+
   //checking if the guess is valid
   if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
   else {
@@ -707,35 +708,36 @@ function writtennumberguest() {
     })
 
     //if the user guesses the correct number they win
-  if (guess == guessNumber) {
+    if (guess == guessNumber) {
 
-   console.log("Congrats! You win")
-   console.log("guessnumber " + guessNumber)
-   update(userwinner, {iswinner: true})
- }
- //if the user guesses too high they are told so
-  else if (guess > guessNumber) {
-    console.log("Too high")
-    console.log("guessnumber " + guessNumber)
-    playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too high"
-  }
-//if the user guesses too low they are told so
-  else if (guess < guessNumber) {
-    console.log("Too low")
-    console.log("guessnumber " + guess)
-    playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too low"
-  }
+      console.log("Congrats! You win")
+      console.log("guessnumber " + guessNumber)
+      update(userwinner, { iswinner: true })
+    }
+    //if the user guesses too high they are told so
+    else if (guess > guessNumber) {
+      console.log("Too high")
+      console.log("guessnumber " + guessNumber)
+      playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too high"
+    }
+    //if the user guesses too low they are told so
+    else if (guess < guessNumber) {
+      console.log("Too low")
+      console.log("guessnumber " + guess)
+      playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too low"
+    }
 
     //sets Playerturn to false, sets the hosts turn to true
     update(playerturn, { Playerturn: false }).then(() => {
       console.log("successfully set playerturn to false")
-      update(playerturnhost, {Playerturn: true})
+      update(playerturnhost, { Playerturn: true })
     })
 
 
- 
 
-}}
+
+  }
+}
 
 function writtennumberhost() {
   const DB = getDatabase();
@@ -766,28 +768,28 @@ function writtennumberhost() {
     //sets Playerturn to false, sets guests turn to true
     update(playerturn, { Playerturn: false }).then(() => {
       console.log("successfully set playerturn to false")
-      update(playerturnguest, {Playerturn: true})
+      update(playerturnguest, { Playerturn: true })
     })
 
-     //if the user guesses the correct number they win
-  if (guess == guessNumber) {
+    //if the user guesses the correct number they win
+    if (guess == guessNumber) {
 
-   console.log("Congrats! You win")
-   console.log("guessnumber " + guessNumber)
-   update(userwinner, {iswinner: true})
- }
- //if the user guesses too high they are told so
-  else if (guess > guessNumber) {
-    console.log("Too high")
-    console.log("guessnumber " + guessNumber)
-    playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too high"
-  }
-//if the user guesses too low they are told so
-  else if (guess < guessNumber) {
-    console.log("Too low")
-    console.log("guessnumber " + guessNumber)
-    playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too low"
-  }
+      console.log("Congrats! You win")
+      console.log("guessnumber " + guessNumber)
+      update(userwinner, { iswinner: true })
+    }
+    //if the user guesses too high they are told so
+    else if (guess > guessNumber) {
+      console.log("Too high")
+      console.log("guessnumber " + guessNumber)
+      playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too high"
+    }
+    //if the user guesses too low they are told so
+    else if (guess < guessNumber) {
+      console.log("Too low")
+      console.log("guessnumber " + guessNumber)
+      playerguess.innerHTML = "Your last guess was " + guess + ", this guess was too low"
+    }
 
   }
 
@@ -796,172 +798,176 @@ function writtennumberhost() {
 }
 
 function fb_guestorhost() {
-const DB = getDatabase();
-const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus/");
-get(hoststatus).then((snapshot) => {
+  const DB = getDatabase();
+  const hoststatus = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus/");
+  get(hoststatus).then((snapshot) => {
     const isuserhost = snapshot.val();
     console.log(isuserhost)
-    //if the user is the host then it runs the functions writtennumberhost
+    //if the user is the host then it runs the function writtennumberhost
     if (isuserhost["isHost"] == true) {
       console.log("you are the host")
       writtennumberhost();
     }
-    //if the user is the host then it runs the required functions
+    //if the user is the host then it runs the function writtennumberguest
     else if (isuserhost["isHost"] == false) {
       console.log("you are the guest")
       writtennumberguest();
-      
+
     }
     //if there is an issue and isHost is null then an alert will appear
-    else if (isuserhost["isHost"] == null)
-    {alert("error, cannot determine if you are host or guest")}
- 
+    else if (isuserhost["isHost"] == null) { alert("error, cannot determine if you are host or guest") }
+
   });
 }
 
 
 function userlisteningforturn() {
-const DB = getDatabase();
-const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
+  const DB = getDatabase();
+  const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
 
-//waits until it is no longer the hosts turn then sets the users turn to true.
-onValue(userTurn, (snapshot) => {
-const userData = snapshot.val();
-if (userData != null && userData.Playerturn == true) {
-isitplayerturn.innerHTML = "It is your turn."
-}
-else if (userData != null && userData.Playerturn == false){
-isitplayerturn.innerHTML = "It is not yet your turn, please wait for your opponent to make their guess."
-}
-})
+  //if Playerturn is true then it updates the users html to say that it is their turn.
+  onValue(userTurn, (snapshot) => {
+    const userData = snapshot.val();
+    if (userData != null && userData.Playerturn == true) {
+      isitplayerturn.innerHTML = "It is your turn."
+    }
+    //if Playerturn is false then it updates the users html to say that it is not their turn
+    else if (userData != null && userData.Playerturn == false) {
+      isitplayerturn.innerHTML = "It is not yet your turn, please wait for your opponent to make their guess."
+    }
+  })
 }
 
 function isplayerturn() {
-const DB = getDatabase();
-const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
-//getting information from the database that says if it is the players turn or not
-get (userTurn).then((snapshot) => {
-const isuserturn = snapshot.val();
-console.log(isuserturn);
-//if it is the players turn then the function fb_guestorhost is run if not then an alert appears telling the user to wait.
-if (isuserturn["Playerturn"] == true) {console.log(isuserturn); fb_guestorhost();}
-else {alert("It is not your turn, please wait for your opponent to go."); 
-}
-})
+  const DB = getDatabase();
+  const userTurn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
+  //getting information from the database that says if it is the players turn or not
+  get(userTurn).then((snapshot) => {
+    const isuserturn = snapshot.val();
+    console.log(isuserturn);
+    //if it is the players turn then the function fb_guestorhost is run if not then an alert appears telling the user to wait.
+    if (isuserturn["Playerturn"] == true) { console.log(isuserturn); fb_guestorhost(); }
+    else {
+      alert("It is not your turn, please wait for your opponent to go.");
+    }
+  })
 }
 
 function gamestarttriggerlisteners() {
-const DB = getDatabase();
-const ishost = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus")
-const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
-get (ishost).then((snapshot) => {
-const isuserhost = snapshot.val();
-console.log(isuserhost);
-  update(userwinner, {iswinner: false}).then(() => {console.log("Successfully reset iswinner to false")})
+  const DB = getDatabase();
+  const ishost = ref(DB, "games/GTN/activegames/" + userId + "/hoststatus")
+  const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
+  get(ishost).then((snapshot) => {
+    const isuserhost = snapshot.val();
+    console.log(isuserhost);
+    //ensuring that the userwinner is set to false so the game doesn't think the user immediately won
+    update(userwinner, { iswinner: false }).then(() => { console.log("Successfully reset iswinner to false") })
 
-//if the user is the host then it runs the functions writtennumberhost
+    //if the user is the host then it starts running the winner listner
     if (isuserhost["isHost"] == true) {
       console.log("you are the host")
       winnerlistenerhost();
     }
-    //if the user is the host then it runs the required functions
+    //if the user is the host then starts running the winner listener
     else if (isuserhost["isHost"] == false) {
       console.log("you are the guest")
       winnerlistenerguest();
-      
+
     }
 
-})
+  })
 }
 
 function winnerlistenerguest() {
-const DB = getDatabase();
-let hostId = sessionStorage.getItem("hostId");
-const hostwinner = ref(DB, "games/GTN/activegames/winner/" + hostId)
-const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
-let guessNumber = Number(sessionStorage.getItem("guessNumber"))
-const totalwins = ref(DB, "Public/" + userId + "/guessNumbertotalwins")
-//temporary just to check that they work
-console.log("winnerlistenerguest is running")
+  const DB = getDatabase();
+  let hostId = sessionStorage.getItem("hostId");
+  const hostwinner = ref(DB, "games/GTN/activegames/winner/" + hostId)
+  const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
+  let guessNumber = Number(sessionStorage.getItem("guessNumber"))
+  const totalwins = ref(DB, "Public/" + userId + "/guessNumbertotalwins")
+  //temporary just to check that they work
+  console.log("winnerlistenerguest is running")
 
 
-onValue(userwinner, (snapshot) => {
-const userwin = snapshot.val();
-//if the user is the winner then it updates the database
-if (userwin != null && userwin.iswinner == true) {
-get(totalwins).then((snapshot) => {
-const userTotalwins = snapshot.val();
-//updates the users wins to there new wins by adding one
-const usernewTotalwins = userTotalwins + 1;
-set(totalwins, usernewTotalwins).then(() => {console.log("successfully updated wins")})
-update(userwinner, {iswinner: false}).then(() => {console.log("Successfully reset iswinner to false")})
-})
+  onValue(userwinner, (snapshot) => {
+    const userwin = snapshot.val();
+    //if the user is the winner then it updates the database
+    if (userwin != null && userwin.iswinner == true) {
+      get(totalwins).then((snapshot) => {
+        const userTotalwins = snapshot.val();
+        //updates the users wins by adding one
+        const usernewTotalwins = userTotalwins + 1;
+        set(totalwins, usernewTotalwins).then(() => { console.log("successfully updated wins") })
+        //alerts the user that they won and then sends them back to the lobby page
+        update(userwinner, { iswinner: false }).then(() => { console.log("Successfully reset iswinner to false") })
+      })
+      alert("You win! The correct number was " + guessNumber)
+      location.href = "./GTNlobby.html"
+    }
 
-alert("You win! The correct number was " + guessNumber)
-location.href = "./GTNlobby.html"
-}
+  })
 
-})
-
-onValue (hostwinner, (snapshot) => {
-const hostwin = snapshot.val();
-if (hostwin != null && hostwin.iswinner == true){
-alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
-location.href = "./GTNlobby.html"
-get(totallosses).then((snapshot) => {
-const userTotallosses = snapshot.val();
-const usernewTotallosses = userTotallosses + 1;
-set(totallosses, usernewTotallosses).then(() => {console.log("successfully updated wins")})
-})
-}
-})
+  onValue(hostwinner, (snapshot) => {
+    const hostwin = snapshot.val();
+    //alerts the user that they lost and then sends them back to the lobby page
+    if (hostwin != null && hostwin.iswinner == true) {
+      alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
+      location.href = "./GTNlobby.html"
+      get(totallosses).then((snapshot) => {
+        const userTotallosses = snapshot.val();
+        //updates the users total losses by adding 1
+        const usernewTotallosses = userTotallosses + 1;
+        set(totallosses, usernewTotallosses).then(() => { console.log("successfully updated wins") })
+      })
+    }
+  })
 
 }
 
 
 function winnerlistenerhost() {
-const DB = getDatabase();
-let guestId = sessionStorage.getItem("guestId");
-const guestwinner = ref(DB, "games/GTN/activegames/winner/" + guestId)
-const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
-let guessNumber = Number(sessionStorage.getItem("guessNumber"))
-const totalwins = ref(DB, "Public/" + userId + "/guessNumbertotalwins")
-const totallosses = ref(DB, "Public/" + userId + "/guessNumbertotallosses")
-//temporary just to check that they work
-console.log("winnerlistenerhost is running")
+  const DB = getDatabase();
+  let guestId = sessionStorage.getItem("guestId");
+  const guestwinner = ref(DB, "games/GTN/activegames/winner/" + guestId)
+  const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
+  let guessNumber = Number(sessionStorage.getItem("guessNumber"))
+  const totalwins = ref(DB, "Public/" + userId + "/guessNumbertotalwins")
+  const totallosses = ref(DB, "Public/" + userId + "/guessNumbertotallosses")
+  //temporary just to check that they work
+  console.log("winnerlistenerhost is running")
 
-onValue(userwinner, (snapshot) => {
-const userwin = snapshot.val();
-//if user is the winner then it will update the database 
-if (userwin != null && userwin.iswinner == true) {
-alert("You win! The corret number was " + guessNumber)
-get(totalwins).then((snapshot) => {
-const userTotalwins = snapshot.val();
-//updates the wins by one
-const usernewTotalwins = userTotalwins + 1;
-set(totalwins, usernewTotalwins).then(() => {console.log("successfully updated wins")})
-})
-//setting iswinner to false early for the users next game
-update(userwinner, {iswinner: false}).then(() => {console.log("Successfully reset iswinner to false")})
+  onValue(userwinner, (snapshot) => {
+    const userwin = snapshot.val();
+    //if user is the winner then it will update the database 
+    if (userwin != null && userwin.iswinner == true) {
+      alert("You win! The corret number was " + guessNumber)
+      get(totalwins).then((snapshot) => {
+        const userTotalwins = snapshot.val();
+        //updates the wins by adding one
+        const usernewTotalwins = userTotalwins + 1;
+        set(totalwins, usernewTotalwins).then(() => { console.log("successfully updated wins") })
+      })
+      //setting iswinner to false early for the users next game
+      update(userwinner, { iswinner: false }).then(() => { console.log("Successfully reset iswinner to false") })
 
-location.href = "./GTNlobby.html"
+      location.href = "./GTNlobby.html"
 
-}
-})
-onValue (guestwinner, (snapshot) => {
-const guestwin = snapshot.val();
-//if the user is the loser then it will update the database
-if (guestwin != null && guestwin.iswinner == true){
-alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
-location.href = "./GTNlobby.html"
-get(totallosses).then((snapshot) => {
-const userTotallosses = snapshot.val();
-//updates the losses by one
-const usernewTotallosses = userTotallosses + 1;
-set(totallosses, usernewTotallosses).then(() => {console.log("successfully updated wins")})
-})
-}
-})
+    }
+  })
+  onValue(guestwinner, (snapshot) => {
+    const guestwin = snapshot.val();
+    //if the user is the loser then it will update the database
+    if (guestwin != null && guestwin.iswinner == true) {
+      alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
+      location.href = "./GTNlobby.html"
+      get(totallosses).then((snapshot) => {
+        const userTotallosses = snapshot.val();
+        //updates the losses by adding one
+        const usernewTotallosses = userTotallosses + 1;
+        set(totallosses, usernewTotallosses).then(() => { console.log("successfully updated wins") })
+      })
+    }
+  })
 
 
 
