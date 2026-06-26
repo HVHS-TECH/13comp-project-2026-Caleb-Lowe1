@@ -691,7 +691,7 @@ function writtennumberguest() {
 
 
   //checking if the guess is valid
-  if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
+  if ( isNaN(guess) || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
   else {
     //sends the players guess to the database
     update(writingthenumber, { Playerguess: guess }).then(() => {
@@ -750,7 +750,7 @@ function writtennumberhost() {
   const playerturnguest = ref(DB, "games/GTN/activegames/playerturn/" + guestId)
   console.log(guestId)
   //checking if the guess is valid
-  if (guess == NaN || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
+  if (isNaN(guess) || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
   else {
     //sends the players guess to the database
     update(writingthenumber, { Playerguess: guess }).then(() => {
