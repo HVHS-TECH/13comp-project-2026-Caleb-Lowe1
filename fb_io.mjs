@@ -273,7 +273,20 @@ function fb_WriteRec() {
   const DB = getDatabase()
 
   const dbReference = ref(DB, "Public/" + userId);
-
+  const totalwins = ref(DB, "Public/" + userId + "/guessNumbertotalwins");
+  const totallosses = ref (DB, "Public/" + userId) + "/guessNumbertotallosses"
+  //if the user doesn't have guessNumbertotalwins in the database then it is added and set to zero
+  get(totalwins).then((snapshot) => {
+  if (!snapshot.exists()) {
+  set(totalwins, 0)
+  }
+  })
+  //if the user doesn't have guessNumbertotallosses in the database then it is added and set to zero
+   get(totallosses).then((snapshot) => {
+  if (!snapshot.exists()) {
+  set(totallosses, 0)
+  }
+  })
   update(dbReference, { Name: name,
     guessNumbertotalwins: 0
    }).then(() => {
@@ -874,9 +887,11 @@ console.log("winnerlistenerguest is running")
 
 onValue(userwinner, (snapshot) => {
 const userwin = snapshot.val();
+//if the user is the winner then it updates the database
 if (userwin != null && userwin.iswinner == true) {
 get(totalwins).then((snapshot) => {
 const userTotalwins = snapshot.val();
+//updates the users wins to there new wins by adding one
 const usernewTotalwins = userTotalwins + 1;
 set(totalwins, usernewTotalwins).then(() => {console.log("successfully updated wins")})
 update(userwinner, {iswinner: false}).then(() => {console.log("Successfully reset iswinner to false")})
@@ -893,6 +908,11 @@ const hostwin = snapshot.val();
 if (hostwin != null && hostwin.iswinner == true){
 alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
 location.href = "./GTNlobby.html"
+get(totallosses).then((snapshot) => {
+const userTotallosses = snapshot.val();
+const usernewTotallosses = userTotallosses + 1;
+set(totallosses, usernewTotallosses).then(() => {console.log("successfully updated wins")})
+})
 }
 })
 
@@ -906,16 +926,18 @@ const guestwinner = ref(DB, "games/GTN/activegames/winner/" + guestId)
 const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
 let guessNumber = Number(sessionStorage.getItem("guessNumber"))
 const totalwins = ref(DB, "Public/" + userId + "/guessNumbertotalwins")
-
+const totallosses = ref(DB, "Public/" + userId + "/guessNumbertotallosses")
 //temporary just to check that they work
 console.log("winnerlistenerhost is running")
 
 onValue(userwinner, (snapshot) => {
 const userwin = snapshot.val();
+//if user is the winner then it will update the database 
 if (userwin != null && userwin.iswinner == true) {
 alert("You win! The corret number was " + guessNumber)
 get(totalwins).then((snapshot) => {
 const userTotalwins = snapshot.val();
+//updates the wins by one
 const usernewTotalwins = userTotalwins + 1;
 set(totalwins, usernewTotalwins).then(() => {console.log("successfully updated wins")})
 })
@@ -928,9 +950,16 @@ location.href = "./GTNlobby.html"
 })
 onValue (guestwinner, (snapshot) => {
 const guestwin = snapshot.val();
+//if the user is the loser then it will update the database
 if (guestwin != null && guestwin.iswinner == true){
 alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
 location.href = "./GTNlobby.html"
+get(totallosses).then((snapshot) => {
+const userTotallosses = snapshot.val();
+//updates the losses by one
+const usernewTotallosses = userTotallosses + 1;
+set(totallosses, usernewTotallosses).then(() => {console.log("successfully updated wins")})
+})
 }
 })
 
