@@ -274,7 +274,7 @@ function fb_WriteRec() {
 
   const dbReference = ref(DB, "Public/" + userId);
   const totalwins = ref(DB, "Public/" + userId + "/guessNumbertotalwins");
-  const totallosses = ref(DB, "Public/" + userId) + "/guessNumbertotallosses"
+  const totallosses = ref(DB, "Public/" + userId + "/guessNumbertotallosses");
   //if the user doesn't have guessNumbertotalwins in the database then it is added and set to zero
   get(totalwins).then((snapshot) => {
     if (!snapshot.exists()) {
