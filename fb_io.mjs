@@ -883,6 +883,7 @@ function winnerlistenerguest() {
   let hostId = sessionStorage.getItem("hostId");
   const hostwinner = ref(DB, "games/GTN/activegames/winner/" + hostId)
   const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
+  const totallosses = ref(DB, "Public/" + userId + "/guessNumbertotallosses")
   let guessNumber = Number(sessionStorage.getItem("guessNumber"))
   const totalwins = ref(DB, "Public/" + userId + "/guessNumbertotalwins")
   //temporary just to check that they work
