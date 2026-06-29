@@ -925,7 +925,7 @@ function winnerlistenerguest() {
           //setting iswinner to false early for the users next game
           update(userwinner, { iswinner: false }).then(() => {
             console.log("Successfully reset iswinner to false")
-            alert("You win! The correct number was " + guessNumber)
+            alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
             location.href = "./GTNlobby.html"
           }))
       })
@@ -980,7 +980,7 @@ function winnerlistenerhost() {
           //setting iswinner to false early for the users next game
           update(userwinner, { iswinner: false }).then(() => {
             console.log("Successfully reset iswinner to false")
-            alert("You win! The correct number was " + guessNumber)
+            alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
             location.href = "./GTNlobby.html"
           }))
       })
