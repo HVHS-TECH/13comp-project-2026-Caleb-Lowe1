@@ -886,6 +886,7 @@ function winnerlistenerguest() {
   const userwinner = ref(DB, "games/GTN/activegames/winner/" + userId)
   let guessNumber = Number(sessionStorage.getItem("guessNumber"))
   const totalwins = ref(DB, "Public/" + userId + "/guessNumbertotalwins")
+  const totallosses = ref(DB, "Public/" + userId + "/guessNumbertotallosses")
   //temporary just to check that they work
   console.log("winnerlistenerguest is running")
 
