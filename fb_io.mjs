@@ -913,7 +913,6 @@ function winnerlistenerguest() {
     const hostwin = snapshot.val();
     //alerts the user that they lost and then sends them back to the lobby page
     if (hostwin != null && hostwin.iswinner == true) {
-      alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
       get(totallosses).then((snapshot) => {
         const userTotallosses = snapshot.val();
         //updates the users total losses by adding 1
@@ -921,7 +920,7 @@ function winnerlistenerguest() {
         set(totallosses, usernewTotallosses).then(() => { console.log("successfully updated wins") })
       })
      update(userwinner, { iswinner: false }).then(() => { console.log("Successfully reset iswinner to false") })
-
+      alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
       location.href = "./GTNlobby.html" 
     }
   })
@@ -944,7 +943,7 @@ function winnerlistenerhost() {
     const userwin = snapshot.val();
     //if user is the winner then it will update the database 
     if (userwin != null && userwin.iswinner == true) {
-      alert("You win! The corret number was " + guessNumber)
+      
       get(totalwins).then((snapshot) => {
         const userTotalwins = snapshot.val();
         //updates the wins by adding one
@@ -953,7 +952,7 @@ function winnerlistenerhost() {
       })
       //setting iswinner to false early for the users next game
       update(userwinner, { iswinner: false }).then(() => { console.log("Successfully reset iswinner to false") })
-
+      alert("You win! The corret number was " + guessNumber)
       location.href = "./GTNlobby.html"
 
     }
@@ -962,7 +961,6 @@ function winnerlistenerhost() {
     const guestwin = snapshot.val();
     //if the user is the loser then it will update the database
     if (guestwin != null && guestwin.iswinner == true) {
-      alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
       get(totallosses).then((snapshot) => {
         const userTotallosses = snapshot.val();
         //updates the losses by adding one
@@ -970,7 +968,7 @@ function winnerlistenerhost() {
         set(totallosses, usernewTotallosses).then(() => { console.log("successfully updated wins") })
       })
       update(userwinner, { iswinner: false }).then(() => { console.log("Successfully reset iswinner to false") })
-
+      alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
       location.href = "./GTNlobby.html"
     }
   })
