@@ -578,7 +578,6 @@ function fb_GuessTheNumberGame(hostId) {
 function fb_sendplayertogame() {
   const DB = getDatabase();
   const dbReference = ref(DB, "games/GTN/activegames/" + userId);
-  const host = ref(DB, "games/GTN/activegames/" + userId + "/host")
   const playerturn = ref(DB, "games/GTN/activegames/playerturn/" + userId)
   const getguestId = ref(DB, "games/GTN/activegames/" + userId + "/guestId");
 
@@ -592,7 +591,7 @@ function fb_sendplayertogame() {
     //if the game is full then it will send the user who filled the game to gameGTN
     if (playerstatus["Full"] == true) {
       location.href = "GTNgame.html"
-      update(host, { hostId: userId })
+
 
 
     }
