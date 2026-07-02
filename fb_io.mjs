@@ -400,6 +400,7 @@ function fb_sortedread() {
   });
 }
 
+
 function fb_sortedreadcoin() {
   console.log('%c fb_sortedreadcoin(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const DB = getDatabase();
@@ -694,7 +695,7 @@ function writtennumberguest() {
 
 
   //checking if the guess is valid
-  if ( isNaN(guess) || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
+  if (isNaN(guess) || guess == " " || guess == null || guess <= 0 || guess >= 101) { alert("this is not a valid number, your guess must be between 1 and 100 please guess again") }
   else {
     //sends the players guess to the database
     update(writingthenumber, { Playerguess: guess }).then(() => {
@@ -902,9 +903,10 @@ function winnerlistenerguest() {
         //updates the users wins by adding one
         const usernewTotalwins = userTotalwins + 1;
         set(totalwins, usernewTotalwins).then(() => { console.log("successfully updated wins") })
-        //alerts the user that they won and then sends them back to the lobby page
+        //setting is winner to false early for the users next game
         update(userwinner, { iswinner: false }).then(() => { console.log("Successfully reset iswinner to false") })
       })
+      //alerts the user that they won and then sends them back to the lobby page
       alert("You win! The correct number was " + guessNumber)
       location.href = "./GTNlobby.html"
     }
@@ -921,9 +923,11 @@ function winnerlistenerguest() {
         const usernewTotallosses = userTotallosses + 1;
         set(totallosses, usernewTotallosses).then(() => { console.log("successfully updated wins") })
       })
-     update(userwinner, { iswinner: false }).then(() => { console.log("Successfully reset iswinner to false") })
+      //setting iswinner to false early for the users next game
+      update(userwinner, { iswinner: false }).then(() => { console.log("Successfully reset iswinner to false") })
+      //alerts the user that they lost and then sends them back to the lobby page
       alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
-      location.href = "./GTNlobby.html" 
+      location.href = "./GTNlobby.html"
     }
   })
 
@@ -945,7 +949,7 @@ function winnerlistenerhost() {
     const userwin = snapshot.val();
     //if user is the winner then it will update the database 
     if (userwin != null && userwin.iswinner == true) {
-      
+
       get(totalwins).then((snapshot) => {
         const userTotalwins = snapshot.val();
         //updates the wins by adding one
@@ -954,6 +958,7 @@ function winnerlistenerhost() {
       })
       //setting iswinner to false early for the users next game
       update(userwinner, { iswinner: false }).then(() => { console.log("Successfully reset iswinner to false") })
+      //alerts the user that they won and then sends them back to the lobby page
       alert("You win! The corret number was " + guessNumber)
       location.href = "./GTNlobby.html"
 
@@ -969,7 +974,9 @@ function winnerlistenerhost() {
         const usernewTotallosses = userTotallosses + 1;
         set(totallosses, usernewTotallosses).then(() => { console.log("successfully updated wins") })
       })
+      //setting iswinner to false early for the users next game
       update(userwinner, { iswinner: false }).then(() => { console.log("Successfully reset iswinner to false") })
+      //alerts the user that they lost and then sends them back to the lobby page
       alert("You lost, your opponent guessed the correct number. The correct number was " + guessNumber)
       location.href = "./GTNlobby.html"
     }
@@ -981,7 +988,13 @@ function winnerlistenerhost() {
 
 
 }
+//starting to make the leaderboard
+fb_GTNleaderboard() {
+const DB = getDatabase();
+const sortKey = "GTNWins" 
+const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey), limitToFirst(5));
 
+<<<<<<< HEAD
 
 function fb_sortedreadGTN() {
   const DB = getDatabase();
@@ -1035,6 +1048,8 @@ function fb_sortedreadGTNlosses() {
   }).catch((error) => {
     console.log("Sorting failed", error);
   });
+=======
+>>>>>>> ae7c734611dbbbc6a1c2c37ee67419afc14a001d
 }
 
 /**************************************************************/
