@@ -988,13 +988,7 @@ function winnerlistenerhost() {
 
 
 }
-//starting to make the leaderboard
-fb_GTNleaderboard() {
-const DB = getDatabase();
-const sortKey = "GTNWins" 
-const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey), limitToFirst(5));
 
-<<<<<<< HEAD
 
 function fb_sortedreadGTN() {
   const DB = getDatabase();
@@ -1048,9 +1042,7 @@ function fb_sortedreadGTNlosses() {
   }).catch((error) => {
     console.log("Sorting failed", error);
   });
-=======
->>>>>>> ae7c734611dbbbc6a1c2c37ee67419afc14a001d
-}
+
 
 /**************************************************************/
 // END OF CODE
