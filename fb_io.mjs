@@ -78,7 +78,9 @@ export {
   fb_detectloginchangenumber,
   fb_guestorhost,
   isplayerturn,
-  gamestarttriggerlisteners
+  gamestarttriggerlisteners,
+  fb_sortedreadGTN,
+  fb_sortedreadGTNlosses
 
 
 
@@ -981,6 +983,59 @@ function winnerlistenerhost() {
 }
 
 
+function fb_sortedreadGTN() {
+  const DB = getDatabase();
+  const sortKey = "guessNumbertotalwins";
+  const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey));
+  const table = document.getElementById("HighscoreGTN");
+  table.innerHTML = "";
+
+  get(dbReference).then((snapshot) => {
+    var rank = 1;
+    const Guessnumberusers = [];
+    snapshot.forEach((userSnap) => {
+      //puts the snapshot in the array Guessnumberusers
+      Guessnumberusers.push(userSnap.val());
+    });
+    //reverses the order of the leaderboard so it goes from largest to smallest
+    Guessnumberusers.reverse();
+    Guessnumberusers.forEach((obj) => {
+      //creating the leaderboard on screen
+      table.innerHTML += "<tr><td>" + rank + "</td><td>" + obj.Name + "</td><td>" + obj.guessNumbertotalwins + "</td></tr>";
+      //adds next number to the rank for the next user in the list, without it everyone is set as number 1
+      rank++;
+    });
+  }).catch((error) => {
+    console.log("Sorting failed", error);
+  });
+}
+
+function fb_sortedreadGTNlosses() {
+  const DB = getDatabase();
+  const sortKey = "guessNumbertotallosses";
+  const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey));
+  const table = document.getElementById("mostlossesGTN");
+  table.innerHTML = "";
+
+  get(dbReference).then((snapshot) => {
+    var rank = 1;
+    const Guessnumberusers = [];
+    snapshot.forEach((userSnap) => {
+      //puts the snapshot in the array Guessnumberusers
+      Guessnumberusers.push(userSnap.val());
+    });
+    //reverses the order of the leaderboard so it goes from largest to smallest
+    Guessnumberusers.reverse();
+    Guessnumberusers.forEach((obj) => {
+      //creating the leaderboard on screen
+      table.innerHTML += "<tr><td>" + rank + "</td><td>" + obj.Name + "</td><td>" + obj.guessNumbertotallosses + "</td></tr>";
+      //adds next number to the rank for the next user in the list, without it everyone is set as number 1
+      rank++;
+    });
+  }).catch((error) => {
+    console.log("Sorting failed", error);
+  });
+}
 
 /**************************************************************/
 // END OF CODE

@@ -100,6 +100,14 @@ import { gamestarttriggerlisteners }
     from './fb_io.mjs';
 window.gamestarttriggerlistenersn = gamestarttriggerlisteners;
 
+import { fb_sortedreadGTN }
+    from './fb_io.mjs';
+window.fb_sortedreadGTN = fb_sortedreadGTN;
+
+import { fb_sortedreadGTNlosses }
+    from './fb_io.mjs';
+window.fb_sortedreadGTNlosses = fb_sortedreadGTNlosses;
+
 /**************************************************************/
 // index.html main code
 /**************************************************************/

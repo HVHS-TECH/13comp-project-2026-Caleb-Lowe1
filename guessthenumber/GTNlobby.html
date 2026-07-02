@@ -8,13 +8,10 @@
 
 <body>
 
-    <body onload="fb_initialise(); fb_detectloginchange(); fb_readListener();"></body>
+    <body onload="fb_initialise(); fb_detectloginchange(); fb_readListener(); fb_sortedreadGTN(); fb_sortedreadGTNlosses()"></body>
     <div class="grid-container">
         <div class="grid-1">
             <button onclick="location.href='../gameMenu.html'">Back to game selection</button>
-            <br>
-            <br>
-            <button onclick="fb_DeleteRec()">Delete data</button>
             <br>
             <br>
             <button onclick="location.href='GTNinstructions.html'">Instructions</button>
@@ -26,13 +23,23 @@
             <h1></h1>
             <h1>Guess the number lobby</h1>
             <br>
+            <br>
             <h2>Create a game or join a game:</h2>
             <br>
+            <br>
             <button onclick="fb_createGame()">Create game</button>
-
+            <br>
             <br>
             <h3>Avaliable games:</h3>
             <div id="GTNbuttons"></div>
+            <br>
+            <br>
+            <h2>Leaderboard: Most wins</h2>
+            <table id = "HighscoreGTN"></table>
+            <br>
+            <br>
+            <h2>Leaderboard: Most losses</h2>
+            <table id = "mostlossesGTN"></table>
         </div>
     </div>
 

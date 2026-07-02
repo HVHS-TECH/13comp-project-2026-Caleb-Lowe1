@@ -29,3 +29,8 @@ h2 {
   background-color: #70c8da;
   text-align: center;
 }
+
+table {
+  border:1px solid black;
+  width:100%
+}
