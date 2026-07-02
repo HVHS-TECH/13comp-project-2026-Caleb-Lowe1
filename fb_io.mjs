@@ -398,6 +398,7 @@ function fb_sortedread() {
   });
 }
 
+
 function fb_sortedreadcoin() {
   console.log('%c fb_sortedreadcoin(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const DB = getDatabase();
@@ -985,8 +986,13 @@ function winnerlistenerhost() {
 
 
 }
+//starting to make the leaderboard
+fb_GTNleaderboard() {
+const DB = getDatabase();
+const sortKey = "GTNWins" 
+const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey), limitToFirst(5));
 
-
+}
 
 /**************************************************************/
 // END OF CODE
