@@ -1042,7 +1042,7 @@ function fb_sortedreadGTNlosses() {
   }).catch((error) => {
     console.log("Sorting failed", error);
   });
-
+}
 
 /**************************************************************/
 // END OF CODE
